@@ -3,3 +3,4 @@ scipy
 astropy
 ccdproc
 matplotlib
+pandas
