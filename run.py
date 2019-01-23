@@ -20,6 +20,8 @@ str_dark = "Dark Frame"
 str_light = "Light Frame"
 str_bias = 'Bias Frame'
 
+
+
 args = parser.parse_args()
 
 try:
@@ -32,6 +34,17 @@ try:
 except:
     pass
 
+
+imstats = lambda dat: (dat.min(), dat.max(), dat.mean(), dat.std())
+
+def oscan_and_trim(image_list):
+    """
+    Remove overscan and trim a list of images. The original list is replaced by a list of images
+    with the changes applied.
+    """
+    for idx, img in enumerate(image_list):
+        oscan = ccdproc.subtract_overscan(img, img[:, 3075:3079], add_keyword={'oscan_sub': True, 'calstat': 'O'}, model=models.Polynomial1D(1))
+        image_list[idx] = ccdproc.trim_image(oscan[:, :3073], add_keyword={'trimmed': True, 'calstat': 'OT'})
 
 def sort_files(path: str):
     bias = []
@@ -61,10 +74,13 @@ def sort_files(path: str):
 
 
 def get_master_bias(bias: List[CCDData]) -> CCDData:
-    master_bias = ccdproc.combine(bias, method='median')
+    bias_combine = ccdproc.Combiner(bias)
+    master_bias = bias_combine.average_combine()
+    #master_bias = ccdproc.combine(bias, method='median')
     pl.figure(figsize=(8, 8))
     pl.title(f"Master bias")
-    pl.imshow(master_bias, cmap='gray')
+    bias_min, bias_max, bias_mean, bias_std = imstats(np.asarray(master_bias))
+    pl.imshow(master_bias, vmax=bias_mean + 4 * bias_std, vmin=bias_mean - 4 * bias_std,cmap='gray')
     pl.colorbar()
     pl.savefig(args.output + "master_bias.pdf")
     pl.close()
@@ -72,15 +88,36 @@ def get_master_bias(bias: List[CCDData]) -> CCDData:
     return master_bias
 
 
+def overscan_trim_and_sigma_clip_median(image_list):
+    """
+    Combine a list of images using median
+
+    This function does several steps:
+
+    1. Subtract overscan
+    2. Trim image
+    3. sigma clip image using a median of the unclipped stack as the baseline
+    4. combine the images on the list using median
+
+    ** It modifies the images in the input list. **
+    """
+    combo = ccdproc.Combiner(image_list)
+    combo.sigma_clipping(func=np.ma.median)
+    return combo
+
+
 def get_master_dark(dark: List[CCDData], master_bias : CCDData) -> CCDData:
-    master_dark = ccdproc.combine(dark,method='median')
-    master_dark = ccdproc.subtract_bias(master_dark,master_bias)
-    master_dark.data = master_dark.data/master_dark.header["EXPOSURE"]
+    # make a combiner for sigma clipping and median combine
+    for i in range(0,len(dark)):
+        dark[i] = ccdproc.subtract_bias(dark[i],master_bias)
+    a_combiner = overscan_trim_and_sigma_clip_median(dark)
+    master_dark = a_combiner.median_combine(median_func=np.ma.median)
+    master_dark.data[master_dark.data < 0] = 0
+    master_dark.data = master_dark.data/dark[0].header["EXPOSURE"]
     master_dark.header["EXPOSURE"] = 1
+    d_min, d_max, d_mean, d_std = imstats(np.asarray(master_dark))
     pl.figure(figsize=(8, 8))
-    pl.title(f"Master dark")
-    pl.imshow(master_dark,
-              cmap='gray',vmax= np.median(master_dark.data) + 6*np.std(master_dark.data))
+    pl.imshow(master_dark, vmax=d_mean + 4 * d_std, vmin=0,cmap='gray')
     pl.colorbar()
     pl.savefig(args.output + "master_dark.pdf")
     pl.close()
@@ -91,28 +128,44 @@ def get_master_flat(flat : Dict[str,List[CCDData]],master_bias : CCDData,master_
     median_cutoff = 4000
     for key, value in flat.items():
         flat_list = []
-        for data in value:
+        try:
+            makedirs(args.output+f"{key}")
+        except:
+            pass
+        for data,i in zip(value,range(0,len(value))):
             print(f"Mean value {np.median(data.data)}")
             if np.median(data.data) < median_cutoff:
                 continue
             data = ccdproc.subtract_bias(data, master_bias)
-            data.data = data.data / np.amax(data.data)
+            data = ccdproc.subtract_dark(data,master_dark,exposure_time="EXPOSURE",scale=True, exposure_unit=u.second)
+            data.data = data.data / np.median(data.data)
             flat_list.append(data)
+
+            pl.figure(figsize=(16, 16))
+            pl.title(f"Master flat {key}")
+            d_min, d_max, d_mean, d_std = imstats(np.asarray(data))
+            pl.imshow(data, vmax=d_mean + 4 * d_std, vmin=d_mean - 4 * d_std, cmap='gray')
+            pl.colorbar()
+            pl.savefig(args.output + f"/{key}/{key}_flat_{i}.pdf")
+            pl.close()
+
         combined_flat = ccdproc.combine(flat_list, method='median')
         median = np.median(combined_flat.data)
         std = np.std(combined_flat.data)
-        flat_mask = np.logical_or(combined_flat.data < median - 3 * std, combined_flat.data > median + 3 * std)
+        #flat_mask = np.logical_or(combined_flat.data < median - 3 * std, combined_flat.data > median + 3 * std)
         print(median)
         print(std)
-        combined_flat.data[flat_mask] = median
+        #combined_flat.data[flat_mask] = median
+        d_min, d_max, d_mean, d_std = imstats(np.asarray(combined_flat))
         combined_flat.data = combined_flat.data / np.amax(combined_flat.data)
         pl.figure(figsize=(16, 16))
         pl.title(f"Master flat {key}")
-        pl.imshow(combined_flat, cmap='gray')
+        pl.imshow(combined_flat, vmax=d_mean + 4 * d_std, vmin=d_mean - 4 * d_std, cmap='gray')
         pl.colorbar()
         pl.savefig(args.output + f"master_flat{key}.pdf")
         pl.close()
         master_flat[key] = combined_flat
+        CCDData.write(combined_flat, args.output + f"master_flat_{key}.fits")
 
     return master_flat
 
@@ -138,15 +191,12 @@ for key, image in images.items():
     im = ax.imshow(image, cmap='gray', vmin=0)  # ,vmax=np.median(image.data)*2)
     pl.colorbar(im, ax=ax)
     image = ccdproc.subtract_bias(image, master_bias)
-    CCDData.write(image, args.output + f"after_bias_{key}")
     image = ccdproc.subtract_dark(image, master_dark,
                                   dark_exposure=master_dark.header["EXPOSURE"] * u.second,
                                   data_exposure=image.header["EXPOSURE"] * 100*u.second,
                                   scale=True,
                                   exposure_unit=u.second)
-    CCDData.write(image, args.output + f"after_dark{key}")
     image = ccdproc.flat_correct(image, master_flat[image.header["FILTER"]])
-    CCDData.write(image, args.output + f"after_flat{key}")
     # image.data = (ccdproc.subtract_bias(image,master_bias).data - tmp_dark)/master_flat[image.header["FILTER"]]
     image.data[image.data < 0] = 0
 
@@ -155,5 +205,6 @@ for key, image in images.items():
     im = ax.imshow(image, cmap='gray', vmin=0)  # ,vmax=np.median(image.data)*2)
     pl.colorbar(im, ax=ax)
     pl.savefig(args.output + f"{key}.pdf")
+    #pl.show()
     pl.close()
     CCDData.write(image, args.output + f"{key}")
