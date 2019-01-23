@@ -6,22 +6,23 @@ from matplotlib.axes import Axes
 from subprocess import call
 
 # location of input images
-image_r = "16_01_out/imager-0001R_150.fit" 
-image_i = "16_01_out/imager-0001I_250.fit"
-image_v = "16_01_out/imager-0001V_150.fit"
-image_b = "16_01_out/imager-0001B_300.fit"
+image_r = "16_01_out/imager-0001R_015.fit" 
+image_i = "16_01_out/imager-0001I_025.fit"
+image_v = "16_01_out/imager-0001V_015.fit"
+image_b = "16_01_out/imager-0001B_030.fit"
 
 # call sextractor with custom config for each filter
-call(['sex',image_r,'-c','sex_config_R.txt'])
-call(['sex',image_i,'-c','sex_config_I.txt'])
-call(['sex',image_v,'-c','sex_config_V.txt'])
-call(['sex',image_b,'-c','sex_config_B.txt'])
+# the "[0]" is needed as sextractor otherwise uses all extensions of the file and adds all detections to the catalogue!
+call(['sex',image_r+"[0]",'-c','sex_config_R.txt'])
+call(['sex',image_i+"[0]",'-c','sex_config_I.txt'])
+call(['sex',image_v+"[0]",'-c','sex_config_V.txt'])
+call(['sex',image_b+"[0]",'-c','sex_config_B.txt'])
 
 # load sextractor output (apertures of detected sources are also available)
-band_r = np.genfromtxt("sex_out_R.cat",skip_header=4,usecols=[0,2,3])
-band_i = np.genfromtxt("sex_out_I.cat",skip_header=4,usecols=[0,2,3])
-band_v = np.genfromtxt("sex_out_V.cat",skip_header=4,usecols=[0,2,3])
-band_b = np.genfromtxt("sex_out_B.cat",skip_header=4,usecols=[0,2,3])
+band_r = np.genfromtxt("sex_out_R.cat",comments="#",usecols=[0,2,3])
+band_i = np.genfromtxt("sex_out_I.cat",comments="#",usecols=[0,2,3])
+band_v = np.genfromtxt("sex_out_V.cat",comments="#",usecols=[0,2,3])
+band_b = np.genfromtxt("sex_out_B.cat",comments="#",usecols=[0,2,3])
 
 max_length = max(len(band_r),len(band_i),len(band_v),len(band_b))
 
