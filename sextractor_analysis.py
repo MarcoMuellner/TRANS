@@ -6,10 +6,10 @@ from matplotlib.axes import Axes
 from subprocess import call
 
 # location of input images
-image_r = "22_01_out/imager_teutsch55-0001R_400.fit" 
-image_i = "22_01_out/imager_teutsch55-0001I_400.fit"
-image_v = "22_01_out/imager_teutsch55-0001V_400.fit"
-image_b = "22_01_out/imager_teutsch55-0001B_400.fit"
+image_r = "16_01_out/imager-0001R_150.fit" 
+image_i = "16_01_out/imager-0001I_250.fit"
+image_v = "16_01_out/imager-0001V_150.fit"
+image_b = "16_01_out/imager-0001B_300.fit"
 
 # call sextractor with custom config for each filter
 # the "[0]" is needed as sextractor otherwise uses all extensions of the file and adds all detections to the catalogue!
