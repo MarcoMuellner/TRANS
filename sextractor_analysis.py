@@ -13,10 +13,10 @@ image_b = "22_01_out/imager_teutsch55-0001B_400.fit"
 
 # call sextractor with custom config for each filter
 # the "[0]" is needed as sextractor otherwise uses all extensions of the file and adds all detections to the catalogue!
-call(['sex',image_r+"[0]",'-c','sex_config_R.txt'])
-call(['sex',image_i+"[0]",'-c','sex_config_I.txt'])
-call(['sex',image_v+"[0]",'-c','sex_config_V.txt'])
-call(['sex',image_b+"[0]",'-c','sex_config_B.txt'])
+#call(['sex',image_r+"[0]",'-c','sex_config_R.txt'])
+#call(['sex',image_i+"[0]",'-c','sex_config_I.txt'])
+#call(['sex',image_v+"[0]",'-c','sex_config_V.txt'])
+#call(['sex',image_b+"[0]",'-c','sex_config_B.txt'])
 
 # load sextractor output (apertures of detected sources are also available)
 band_r = np.genfromtxt("sex_out_R.cat",comments="#",usecols=[0,2,3])

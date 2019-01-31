@@ -6,6 +6,7 @@ import matplotlib.pyplot as pl
 import argparse
 from directoryManager import cd
 import os
+from astropy.wcs import WCS
 from copy import deepcopy
 from os import makedirs
 from shutil import rmtree
@@ -13,7 +14,7 @@ from typing import List,Dict
 
 parser = argparse.ArgumentParser()
 parser.add_argument("folder", help="The folder containing the data", type=str)
-parser.add_argument("output", help="Output folder", type=str)
+
 
 str_flat = "Flat Field"
 str_dark = "Dark Frame"
@@ -24,13 +25,15 @@ str_bias = 'Bias Frame'
 
 args = parser.parse_args()
 
+out_path = args.folder.replace("/") + "_out/"
+
 try:
-    rmtree(args.output)
+    rmtree(out_path)
 except:
     pass
 
 try:
-    makedirs(args.output)
+    makedirs(out_path)
 except:
     pass
 
@@ -82,7 +85,7 @@ def get_master_bias(bias: List[CCDData]) -> CCDData:
     bias_min, bias_max, bias_mean, bias_std = imstats(np.asarray(master_bias))
     pl.imshow(master_bias, vmax=bias_mean + 4 * bias_std, vmin=bias_mean - 4 * bias_std,cmap='gray')
     pl.colorbar()
-    pl.savefig(args.output + "master_bias.pdf")
+    pl.savefig(out_path + "master_bias.pdf")
     pl.close()
 
     return master_bias
@@ -119,7 +122,7 @@ def get_master_dark(dark: List[CCDData], master_bias : CCDData) -> CCDData:
     pl.figure(figsize=(8, 8))
     pl.imshow(master_dark, vmax=d_mean + 4 * d_std, vmin=0,cmap='gray')
     pl.colorbar()
-    pl.savefig(args.output + "master_dark.pdf")
+    pl.savefig(out_path + "master_dark.pdf")
     pl.close()
     return master_dark
 
@@ -129,7 +132,7 @@ def get_master_flat(flat : Dict[str,List[CCDData]],master_bias : CCDData,master_
     for key, value in flat.items():
         flat_list = []
         try:
-            makedirs(args.output+f"{key}")
+            makedirs(out_path + f"{key}")
         except:
             pass
         for data,i in zip(value,range(0,len(value))):
@@ -146,7 +149,7 @@ def get_master_flat(flat : Dict[str,List[CCDData]],master_bias : CCDData,master_
             d_min, d_max, d_mean, d_std = imstats(np.asarray(data))
             pl.imshow(data, vmax=d_mean + 4 * d_std, vmin=d_mean - 4 * d_std, cmap='gray')
             pl.colorbar()
-            pl.savefig(args.output + f"/{key}/{key}_flat_{i}.pdf")
+            pl.savefig(out_path + f"/{key}/{key}_flat_{i}.pdf")
             pl.close()
 
         combined_flat = ccdproc.combine(flat_list, method='median')
@@ -162,10 +165,10 @@ def get_master_flat(flat : Dict[str,List[CCDData]],master_bias : CCDData,master_
         pl.title(f"Master flat {key}")
         pl.imshow(combined_flat, vmax=d_mean + 4 * d_std, vmin=d_mean - 4 * d_std, cmap='gray')
         pl.colorbar()
-        pl.savefig(args.output + f"master_flat{key}.pdf")
+        pl.savefig(out_path + f"master_flat{key}.pdf")
         pl.close()
         master_flat[key] = combined_flat
-        CCDData.write(combined_flat, args.output + f"master_flat_{key}.fits")
+        CCDData.write(combined_flat, out_path + f"master_flat_{key}.fits")
 
     return master_flat
 
@@ -175,8 +178,8 @@ master_bias = get_master_bias(bias)
 master_dark = get_master_dark(dark,master_bias)
 
 
-CCDData.write(master_bias, args.output + f"master_bias.fit")
-CCDData.write(master_dark, args.output + f"master_dark.fit")
+CCDData.write(master_bias, out_path + f"master_bias.fit")
+CCDData.write(master_dark, out_path + f"master_dark.fit")
 
 # master_dark.data[inv_mask] = master_dark.data[inv_mask] / master_dark.header["EXPOSURE"]
 
@@ -204,7 +207,8 @@ for key, image in images.items():
     ax.set_title(f"Image after")
     im = ax.imshow(image, cmap='gray', vmin=0)  # ,vmax=np.median(image.data)*2)
     pl.colorbar(im, ax=ax)
-    pl.savefig(args.output + f"{key}.pdf")
+    pl.savefig(out_path + f"{key}.pdf")
     #pl.show()
     pl.close()
-    CCDData.write(image, args.output + f"{key}")
+
+    CCDData.write(image, out_path + f"{key}")

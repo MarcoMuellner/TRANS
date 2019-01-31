@@ -3,4 +3,5 @@ scipy
 astropy
 ccdproc
 matplotlib
+astroquery
 pandas
