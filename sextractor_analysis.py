@@ -6,17 +6,40 @@ from matplotlib.axes import Axes
 from subprocess import call
 
 # location of input images
-image_r = "16_01_out/imager-0001R_150.fit" 
-image_i = "16_01_out/imager-0001I_250.fit"
-image_v = "16_01_out/imager-0001V_150.fit"
-image_b = "16_01_out/imager-0001B_300.fit"
+
+# M34 #
+#image_r = "16_01_out/imager-0001R_150.fit" 
+#image_i = "16_01_out/imager-0001I_250.fit"
+#image_v = "16_01_out/imager-0001V_150.fit"
+#image_b = "16_01_out/imager-0001B_300.fit"
+
+# C0001+557
+
+#image_r = "22_01_out/imager_c0001_557-0002R_200.fit" 
+#image_i = "22_01_out/imager_c0001_557-0001I_100.fit"
+#image_v = "22_01_out/imager_c0001_557-0001V_200.fit"
+#image_b = "22_01_out/imager_c0001_557-0001B_500.fit"
+
+# Teutsch55 16.01.
+
+image_r = "16_01_out/imager_teutsch55-0001R_300.fit" 
+image_i = "16_01_out/imager_teutsch55-0001I_300.fit"
+image_v = "16_01_out/imager_teutsch55-0001V_300.fit"
+image_b = "16_01_out/imager_teutsch55-0001B_300.fit"
+
+# Teutsch55 22.01.
+
+#image_r = "22_01_out/imager_teutsch55-0001R_400.fit" 
+#image_i = "22_01_out/imager_teutsch55-0001I_400.fit"
+#image_v = "22_01_out/imager_teutsch55-0001V_400.fit"
+#image_b = "22_01_out/imager_teutsch55-0001B_400.fit"
 
 # call sextractor with custom config for each filter
 # the "[0]" is needed as sextractor otherwise uses all extensions of the file and adds all detections to the catalogue!
-#call(['sex',image_r+"[0]",'-c','sex_config_R.txt'])
-#call(['sex',image_i+"[0]",'-c','sex_config_I.txt'])
-#call(['sex',image_v+"[0]",'-c','sex_config_V.txt'])
-#call(['sex',image_b+"[0]",'-c','sex_config_B.txt'])
+call(['sex',image_r+"[0]",'-c','sex_config_R.txt'])
+call(['sex',image_i+"[0]",'-c','sex_config_I.txt'])
+call(['sex',image_v+"[0]",'-c','sex_config_V.txt'])
+call(['sex',image_b+"[0]",'-c','sex_config_B.txt'])
 
 # load sextractor output (apertures of detected sources are also available)
 band_r = np.genfromtxt("sex_out_R.cat",comments="#",usecols=[0,2,3])
