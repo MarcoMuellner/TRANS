@@ -52,12 +52,15 @@ def sort_files(path: str):
                 temp = file_data.header["SET-TEMP"]
 
                 if temp not in result_files.keys():
-                    result_files[temp] = {str_bias: [], str_dark: []}
+                    result_files[temp] = {}
+
+                if file_data.header['XBINNING'] not in result_files[temp].keys():
+                    result_files[temp][file_data.header['XBINNING']] = {str_bias: [], str_dark: []}
 
                 if str_dark == file_data.header['IMAGETYP']:
-                    result_files[temp][str_dark].append(file_data)
+                    result_files[temp][file_data.header['XBINNING']][str_dark].append(file_data)
                 elif str_bias == file_data.header['IMAGETYP']:
-                    result_files[temp][str_bias].append(file_data)
+                    result_files[temp][file_data.header['XBINNING']][str_bias].append(file_data)
 
     return result_files
 
@@ -105,63 +108,68 @@ def get_master_dark(dark: List[CCDData], master_bias: CCDData) -> CCDData:
 res_files = sort_files(in_path)
 
 for temp, values in res_files.items():
-    master_bias = get_master_bias(values[str_bias])
-    master_dark = get_master_dark(values[str_dark], master_bias)
+    for bin, bin_values in values.items():
+        master_bias = get_master_bias(bin_values[str_bias])
+        master_dark = get_master_dark(bin_values[str_dark], master_bias)
 
-    CCDData.write(master_bias, out_path + f"/master_bias_m_{temp}.fit")
-    CCDData.write(master_dark, out_path + f"/master_dark_m_{temp}.fit")
+        CCDData.write(master_bias, out_path + f"/master_bias_m_{temp}_b_{bin}.fit")
+        CCDData.write(master_dark, out_path + f"/master_dark_m_{temp}_b_{bin}.fit")
 
-    res_files[temp][str_bias_master] = master_bias
-    res_files[temp][str_dark_master] = master_dark
+        res_files[temp][bin][str_bias_master] = master_bias
+        res_files[temp][bin][str_dark_master] = master_dark
 
 
 res_files = OrderedDict(reversed(sorted(res_files.items())))
 n = len(res_files)
+for j in res_files[list(res_files.keys())[0]].keys():
+    y = 3
+    x = n - y - 1
+    fig_bias: Figure = pl.figure(figsize=(15, 13))
+    fig_bias_hist: Figure = pl.figure(figsize=(15, 13))
+    fig_dark: Figure = pl.figure(figsize=(15, 13))
+    fig_dark_hist: Figure = pl.figure(figsize=(15, 13))
+    fig_dark_progression :Figure = pl.figure(figsize=(15,13))
+    ax_progression : Axes = fig_dark_progression.add_subplot(111)
+    ax_progression.set_xlabel("Temperature")
+    ax_progression.set_ylabel("Mean dark current")
+    ax_progression.invert_xaxis()
 
-y = 3
-x = n - y - 1
-fig_bias: Figure = pl.figure(figsize=(16, 10))
-fig_bias_hist: Figure = pl.figure(figsize=(16, 10))
-fig_dark: Figure = pl.figure(figsize=(16, 10))
-fig_dark_hist: Figure = pl.figure(figsize=(16, 10))
-fig_dark_progression :Figure = pl.figure(figsize=(16,10))
-ax_progression : Axes = fig_dark_progression.add_subplot(111)
-ax_progression.set_xlabel("Temperature")
-ax_progression.set_ylabel("Mean dark current")
-ax_progression.invert_xaxis()
+    for (temp, values), i in zip(res_files.items(), range(1, n + 1)):
 
-for (temp, values), i in zip(res_files.items(), range(1, n + 1)):
+        for im_type in [str_bias_master, str_dark_master]:
+            d_min, d_max, d_mean, d_std = imstats(np.asarray(values[j][im_type]))
+            d_median = np.median(values[j][im_type])
+            flat = values[j][im_type].data.flatten()
 
-    for im_type in [str_bias_master, str_dark_master]:
-        d_min, d_max, d_mean, d_std = imstats(np.asarray(values[im_type]))
-        d_median = np.median(values[im_type])
-        flat = values[im_type].data.flatten()
+            if im_type == str_bias_master:
+                ax: Axes = fig_bias.add_subplot(x, y, i)
+                ax_hist : Axes = fig_bias_hist.add_subplot(x, y, i)
+                im = ax.imshow(values[j][im_type], vmax=d_mean + 4 * d_std, vmin=d_mean - 4 * d_std, cmap='gray')
+                range_hist = (d_mean - 4 * d_std, d_mean + 4 * d_std)
+            else:
+                ax: Axes = fig_dark.add_subplot(x, y, i)
+                ax_hist: Axes = fig_dark_hist.add_subplot(x, y, i)
+                im = ax.imshow(values[j][im_type], vmax=d_median + 0.5 * d_std, vmin=0, cmap='gray')
+                range_hist = (0, d_mean + 0.5 * d_std)
+                #ax_progression.plot(temp, d_mean,'x', label=f'{temp}')
+                ax_progression.errorbar(temp,d_mean,d_std/10,fmt='x',label=f"{temp}")
+            ax_hist.hist(flat, bins=50, density=True, range=range_hist, histtype='step',color='k',log=True)
 
-        if im_type == str_bias_master:
-            ax: Axes = fig_bias.add_subplot(x, y, i)
-            ax_hist : Axes = fig_bias_hist.add_subplot(x, y, i)
-            im = ax.imshow(values[im_type], vmax=d_mean + 4 * d_std, vmin=d_mean - 4 * d_std, cmap='gray')
-            range_hist = (d_mean - 4 * d_std, d_mean + 4 * d_std)
-        else:
-            ax: Axes = fig_dark.add_subplot(x, y, i)
-            ax_hist: Axes = fig_dark_hist.add_subplot(x, y, i)
-            im = ax.imshow(values[im_type], vmax=d_median + 0.5 * d_std, vmin=0, cmap='gray')
-            range_hist = (0, d_mean + 0.5 * d_std)
-            #ax_progression.plot(temp, d_mean,'x', label=f'{temp}')
-            ax_progression.errorbar(temp,d_mean,d_std/10,fmt='x',label=f"{temp}")
-        ax_hist.hist(flat, bins=30, density=True, range=range_hist, histtype='step',color='k')
+            pl.colorbar(im, ax=ax)
+            ax.set_title(f"{im_type} {values[j][im_type].header['SET-TEMP']}")
+            ax_hist.set_title(f"{im_type} {values[j][im_type].header['SET-TEMP']}")
+            ax.set_xticks([])
+            ax.set_xticklabels([])
+            ax.set_yticks([])
+            ax.set_yticklabels([])
 
-        pl.colorbar(im, ax=ax)
-        ax.set_title(f"{im_type} {values[im_type].header['SET-TEMP']}")
-        ax_hist.set_title(f"{im_type} {values[im_type].header['SET-TEMP']}")
+    ax_progression.legend()
+    fig_dark_progression.savefig(out_path+f"/dark_mean_progression_b_{j}.pdf")
+    fig_dark.savefig(out_path+f"/dark_b_{j}.pdf")
+    fig_bias.savefig(out_path+f"/bias_b_{j}.pdf")
+    fig_bias_hist.savefig(out_path+f"/bias_hist_b_{j}.pdf")
+    fig_dark_hist.savefig(out_path+f"/dark_hist_b_{j}.pdf")
+    pl.close()
+    #pl.show()
 
-ax_progression.legend()
-fig_dark_progression.savefig(out_path+f"/dark_mean_progression.pdf")
-fig_dark.savefig(out_path+f"/dark.pdf")
-fig_bias.savefig(out_path+f"/bias.pdf")
-fig_bias_hist.savefig(out_path+f"/bias_hist.pdf")
-fig_dark_hist.savefig(out_path+f"/dark_hist.pdf")
-pl.close()
-#pl.show()
-
-# print(res_files)
+    # print(res_files)
