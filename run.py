@@ -25,7 +25,7 @@ str_bias = 'Bias Frame'
 
 args = parser.parse_args()
 
-out_path = args.folder.replace("/") + "_out/"
+out_path = args.folder.replace("/","") + "_out/"
 
 try:
     rmtree(out_path)
