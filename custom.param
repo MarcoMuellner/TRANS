@@ -1,5 +1,5 @@
-#NUMBER                   Running object number                                    
-#EXT_NUMBER               FITS extension number                                    
+NUMBER                   Running object number                                    
+EXT_NUMBER               FITS extension number                                    
 #FLUX_ISO                 Isophotal flux                                            [count]
 #FLUXERR_ISO              RMS error for isophotal flux                              [count]
 #MAG_ISO                  Isophotal magnitude                                       [mag]
@@ -63,14 +63,14 @@ X_IMAGE_DBL              Object position along x (double precision)             
 Y_IMAGE_DBL              Object position along y (double precision)                [pixel]
 #X_FOCAL                  Barycenter position along focal-plane x axis             
 #Y_FOCAL                  Barycenter position along focal-plane y axis             
-#X_WORLD                  Barycenter position along world x axis                    [deg]
-#Y_WORLD                  Barycenter position along world y axis                    [deg]
+X_WORLD                  Barycenter position along world x axis                    [deg]
+Y_WORLD                  Barycenter position along world y axis                    [deg]
 #X_MAMA                   Barycenter position along MAMA x axis                     [m**(-6)]
 #Y_MAMA                   Barycenter position along MAMA y axis                     [m**(-6)]
-#ALPHA_SKY                Right ascension of barycenter (native)                    [deg]
-#DELTA_SKY                Declination of barycenter (native)                        [deg]
-#ALPHA_J2000              Right ascension of barycenter (J2000)                     [deg]
-#DELTA_J2000              Declination of barycenter (J2000)                         [deg]
+ALPHA_SKY                Right ascension of barycenter (native)                    [deg]
+DELTA_SKY                Declination of barycenter (native)                        [deg]
+ALPHA_J2000              Right ascension of barycenter (J2000)                     [deg]
+DELTA_J2000              Declination of barycenter (J2000)                         [deg]
 #ALPHA_B1950              Right ascension of barycenter (B1950)                     [deg]
 #DELTA_B1950              Declination of barycenter (B1950)                         [deg]
 #X2_IMAGE                 Variance along x                                          [pixel**2]
