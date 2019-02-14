@@ -5,79 +5,84 @@ from pandas import DataFrame
 #from matplotlib.figure import Figure
 #from matplotlib.axes import Axes
 from subprocess import call
+import astropy.units as u
 
-comet_R = "comet_exp_out/p46_johnr_t_90_001.fit" 
-comet_I = "comet_exp_out/p46_johni_t_90_001.fit"
-comet_V = "comet_exp_out/p46_johnv_t_90_001.fit"
+comet_R = "astrometry_out/wcs_46P_01_R_090.fits" 
+comet_I = "astrometry_out/wcs_46P_01_I_090.fits"
+comet_V = "astrometry_out/wcs_46P_01_V_090.fits"
+
+comet_R_2 = "astrometry_out/wcs_46P_02_R_090.fits" 
+comet_I_2 = "astrometry_out/wcs_46P_02_I_090.fits"
 
 call(['sex',comet_R+"[0]",'-c','sex_config_comet_R.txt'])
 call(['sex',comet_I+"[0]",'-c','sex_config_comet_I.txt'])
 call(['sex',comet_V+"[0]",'-c','sex_config_comet_V.txt'])
 
-band_r = np.genfromtxt("sex_out_comet_R.cat",comments="#",usecols=[0,2,3])
-band_i = np.genfromtxt("sex_out_comet_I.cat",comments="#",usecols=[0,2,3])
-band_v = np.genfromtxt("sex_out_comet_V.cat",comments="#",usecols=[0,2,3])
 
-print(band_r)
-print(band_i)
+band_r = np.genfromtxt("sex_out_comet_R.cat",comments="#",usecols=[2,4,5,8,9])
+band_i = np.genfromtxt("sex_out_comet_I.cat",comments="#",usecols=[2,4,5,8,9])
+band_v = np.genfromtxt("sex_out_comet_V.cat",comments="#",usecols=[2,4,5,8,9])
 
-delta_x = band_r[0][1]-band_i[0][1]
-delta_y = band_r[0][2]-band_i[0][2]
-
-deltaXY=[delta_x,delta_y]
-print("delta x in px" , delta_x)
-print("delta y in px" , delta_y)
+ra_v = band_v[0][3] *u.degree
+dec_v = band_v[0][4] *u.degree
+ra_r = band_r[0][3] *u.degree
+dec_r = band_r[0][4] *u.degree
+ra_i = band_i[0][3] *u.degree
+dec_i = band_i[0][4] *u.degree
 
 fits_R = fits.open(comet_R)
 fits_I = fits.open(comet_I)
-header_R = fits_R[0].header
-header_I = fits_I[0].header
-print(header_R['DATE-OBS'],header_I['DATE-OBS']) # --> 4:11 minutes difference
-delta_t = 251/60  # in minutes
+fits_V = fits.open(comet_V)
 
-velocity = [delta_x/delta_t, delta_y/delta_t]
+obsT_R = fits_R[0].header['JD-HELIO'] *u.day -2458466 *u.day
+obsT_I = fits_I[0].header['JD-HELIO'] *u.day -2458466 *u.day
+obsT_V = fits_V[0].header['JD-HELIO'] *u.day -2458466 *u.day
 
-print("velocity in pixels/minute", velocity)
+call(['sex',comet_R_2+"[0]",'-c','sex_config_comet_R.txt'])
+call(['sex',comet_I_2+"[0]",'-c','sex_config_comet_I.txt'])
 
+band_r_2 = np.genfromtxt("sex_out_comet_R.cat",comments="#",usecols=[2,4,5,8,9])
+band_i_2 = np.genfromtxt("sex_out_comet_I.cat",comments="#",usecols=[2,4,5,8,9])
 
-# star 1 ID Gaia : Gaia DR2 37452806312572672
-# star 1 pos Gaia : RA: 54.29164785983 DEC: +11.78326216157 	
-# star 1 pos R: 615.6107, 367.22
-# star 1 pos I: 615.5116, 368.0657
-# star 2 ID Gaia : Gaia DR2 37449095460828288  
-# star 2 pos Gaia: RA: 54.38409078240 DEC:+11.74309025637
-# star 2 pos R: 490.2602, 718.3314
-# star 2 pos I: 490.1379, 719.535
+ra_r2 = band_r_2[0][3] *u.degree
+dec_r2 = band_r_2[0][4] *u.degree
+ra_i2 = band_i_2[0][3] *u.degree
+dec_i2 = band_i_2[0][4] *u.degree
 
-x_1_R = 615.6107
-y_1_R = 367.22
+fits_R_2 = fits.open(comet_R_2)
+fits_I_2 = fits.open(comet_I_2)
 
-x_2_R = 490.2602
-y_2_R = 718.3314
+obsT_R2 = fits_R_2[0].header['JD-HELIO'] *u.day -2458466 *u.day
+obsT_I2 = fits_I_2[0].header['JD-HELIO'] *u.day -2458466 *u.day
 
-x_1_I = 615.5116
-y_1_I = 368.0657
+print(obsT_V,obsT_R,obsT_R2,obsT_I,obsT_I2)
+# ORDER : VR, RR2, R2I, II2
 
-x_2_I = 490.1379
-y_2_I = 719.535
+delT_VR = obsT_V - obsT_R
+delT_RR2 = obsT_R - obsT_R2
+delT_R2I = obsT_R2 - obsT_I
+delT_II2 = obsT_I - obsT_I2
 
-x_1_G = 54.29164785983
-y_1_G = 11.78326216157
+print(delT_VR,delT_RR2,delT_R2I,delT_II2)
 
-x_2_G = 54.38409078240
-y_2_G = 11.74309025637
+pmra_VR = ((ra_v - ra_r)/delT_VR).to(u.arcsec/u.minute)
+pmdec_VR = ((dec_v - dec_r)/delT_VR).to(u.arcsec/u.minute)
+pmabs_VR = np.sqrt(pmra_VR**2*np.cos(np.mean([dec_v.value,dec_r.value]))**2+pmdec_VR**2)
 
-deltaG = [x_1_G-x_2_G,y_1_G-y_2_G]
-deltaR = [x_1_R-x_2_R,y_1_R-y_2_R]
-deltaI = [x_1_I-x_2_I,y_1_I-y_2_I]
-shiftRI1 = [x_1_R-x_1_I,y_1_R-y_1_I]
-shiftRI2 = [x_2_R-x_2_I,y_2_R-y_2_I]
+pmra_RR2 = ((ra_r - ra_r2)/delT_RR2).to(u.arcsec/u.minute)
+pmdec_RR2 = ((dec_r - dec_r2)/delT_RR2).to(u.arcsec/u.minute)
+pmabs_RR2 = np.sqrt(pmra_RR2**2*np.cos(np.mean([dec_r.value,dec_r2.value]))**2+pmdec_RR2**2)
 
-print(deltaG, deltaR,deltaI,shiftRI1,shiftRI2)
+pmra_R2I = ((ra_r2 - ra_i)/delT_R2I).to(u.arcsec/u.minute)
+pmdec_R2I = ((dec_r2 - dec_i)/delT_R2I).to(u.arcsec/u.minute)
+pmabs_R2I = np.sqrt(pmra_R2I**2*np.cos(np.mean([dec_r2.value,dec_i.value]))**2+pmdec_R2I**2)
 
-def vecabs(deltalist):
-	return(np.sqrt(deltalist[0]**2+deltalist[1]**2))
+pmra_II2 = ((ra_i - ra_i2)/delT_II2).to(u.arcsec/u.minute)
+pmdec_II2 = ((dec_i - dec_i)/delT_II2).to(u.arcsec/u.minute)
+pmabs_II2 = np.sqrt(pmra_II2**2*np.cos(np.mean([dec_i.value,dec_i2.value]))**2+pmdec_II2**2)
 
-print(vecabs(deltaG),vecabs(deltaR),vecabs(deltaI),vecabs(deltaXY),vecabs(shiftRI1),vecabs(shiftRI2))
+print(pmra_VR,pmdec_VR,pmabs_VR)
+print(pmra_RR2,pmdec_RR2,pmabs_RR2)
+print(pmra_R2I,pmdec_R2I,pmabs_R2I)
+print(pmra_II2,pmdec_II2,pmabs_II2)
 
-print(3600*vecabs(velocity)*vecabs(deltaG)/np.mean([vecabs(deltaR),vecabs(deltaI)]))
