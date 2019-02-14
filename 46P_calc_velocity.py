@@ -78,11 +78,14 @@ pmdec_R2I = ((dec_r2 - dec_i)/delT_R2I).to(u.arcsec/u.minute)
 pmabs_R2I = np.sqrt(pmra_R2I**2*np.cos(np.mean([dec_r2.value,dec_i.value]))**2+pmdec_R2I**2)
 
 pmra_II2 = ((ra_i - ra_i2)/delT_II2).to(u.arcsec/u.minute)
-pmdec_II2 = ((dec_i - dec_i)/delT_II2).to(u.arcsec/u.minute)
+pmdec_II2 = ((dec_i - dec_i2)/delT_II2).to(u.arcsec/u.minute)
 pmabs_II2 = np.sqrt(pmra_II2**2*np.cos(np.mean([dec_i.value,dec_i2.value]))**2+pmdec_II2**2)
 
 print(pmra_VR,pmdec_VR,pmabs_VR)
 print(pmra_RR2,pmdec_RR2,pmabs_RR2)
 print(pmra_R2I,pmdec_R2I,pmabs_R2I)
 print(pmra_II2,pmdec_II2,pmabs_II2)
+print(np.mean([pmabs_VR.value,pmabs_RR2.value,pmabs_R2I.value,pmabs_II2.value])*u.arcsec/u.minute,np.std([pmabs_VR.value,pmabs_RR2.value,pmabs_R2I.value,pmabs_II2.value])*u.arcsec/u.minute)
+
+# RESULT: 2.232657404811999 arcsec / min +/-  1.3051232974035107 arcsec / min
 
