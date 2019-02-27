@@ -1,0 +1,31 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\babel@toc {english}{}
+\contentsline {section}{\numberline {1}Introduction}{3}{section.1}
+\contentsline {section}{\numberline {2}Calibration}{3}{section.2}
+\contentsline {subsection}{\numberline {2.1}Bias calibration}{3}{subsection.2.1}
+\contentsline {subsubsection}{\numberline {2.1.1}Camera 1}{3}{subsubsection.2.1.1}
+\contentsline {subsubsection}{\numberline {2.1.2}Camera 2}{7}{subsubsection.2.1.2}
+\contentsline {subsection}{\numberline {2.2}Dark calibration}{10}{subsection.2.2}
+\contentsline {section}{\numberline {3}Reduction}{14}{section.3}
+\contentsline {subsection}{\numberline {3.1}Theoretical reduction}{14}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Practical application}{15}{subsection.3.2}
+\contentsline {section}{\numberline {4}Imaging}{16}{section.4}
+\contentsline {subsection}{\numberline {4.1}Imaging of a comet}{16}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Imaging of open clusters}{19}{subsection.4.2}
+\contentsline {subsubsection}{\numberline {4.2.1}Hertzsprung-Russell diagrams}{20}{subsubsection.4.2.1}
+\contentsline {subsubsection}{\numberline {4.2.2}Determination of cluster membership using Gaia}{21}{subsubsection.4.2.2}
+\contentsline {paragraph}{\numberline {4.2.2.1}M34}{24}{paragraph.4.2.2.1}
+\contentsline {paragraph}{\numberline {4.2.2.2}Teutsch 55}{30}{paragraph.4.2.2.2}
+\contentsline {paragraph}{\numberline {4.2.2.3}Stock 19 (C0001+557)}{36}{paragraph.4.2.2.3}
+\contentsline {subsection}{\numberline {4.3}Imaging using a "lucky imager"}{41}{subsection.4.3}
+\contentsline {section}{\numberline {5}Spectroscopy}{44}{section.5}
+\contentsline {subsection}{\numberline {5.1}Observational Methods \& Preparation}{44}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}Data Reduction \& Spectrum Extraction}{45}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.3}Wavelength Calibration \& Continuum Normalization}{47}{subsection.5.3}
+\contentsline {subsection}{\numberline {5.4}Discussion}{49}{subsection.5.4}
+\contentsline {section}{\numberline {6}Acknowledgements}{52}{section.6}
+\contentsline {section}{\numberline {7}References}{53}{section.7}
+\contentsline {section}{\numberline {A}\textit {Gaia} data on the extracted sources of the three clusters}{54}{appendix.A}
+\contentsline {subsection}{\numberline {A.1}M34}{54}{subsection.A.1}
+\contentsline {subsection}{\numberline {A.2}Teutsch 55}{58}{subsection.A.2}
+\contentsline {subsection}{\numberline {A.3}Stock 19}{62}{subsection.A.3}

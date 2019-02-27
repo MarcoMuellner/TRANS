@@ -1,0 +1,29 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Calibration}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Bias calibration}{section.2}% 3
+\BOOKMARK [3][-]{subsubsection.2.1.1}{Camera 1}{subsection.2.1}% 4
+\BOOKMARK [3][-]{subsubsection.2.1.2}{Camera 2}{subsection.2.1}% 5
+\BOOKMARK [2][-]{subsection.2.2}{Dark calibration}{section.2}% 6
+\BOOKMARK [1][-]{section.3}{Reduction}{}% 7
+\BOOKMARK [2][-]{subsection.3.1}{Theoretical reduction}{section.3}% 8
+\BOOKMARK [2][-]{subsection.3.2}{Practical application}{section.3}% 9
+\BOOKMARK [1][-]{section.4}{Imaging}{}% 10
+\BOOKMARK [2][-]{subsection.4.1}{Imaging of a comet}{section.4}% 11
+\BOOKMARK [2][-]{subsection.4.2}{Imaging of open clusters}{section.4}% 12
+\BOOKMARK [3][-]{subsubsection.4.2.1}{Hertzsprung-Russell diagrams}{subsection.4.2}% 13
+\BOOKMARK [3][-]{subsubsection.4.2.2}{Determination of cluster membership using Gaia}{subsection.4.2}% 14
+\BOOKMARK [4][-]{paragraph.4.2.2.1}{M34}{subsubsection.4.2.2}% 15
+\BOOKMARK [4][-]{paragraph.4.2.2.2}{Teutsch 55}{subsubsection.4.2.2}% 16
+\BOOKMARK [4][-]{paragraph.4.2.2.3}{Stock 19 \(C0001+557\)}{subsubsection.4.2.2}% 17
+\BOOKMARK [2][-]{subsection.4.3}{Imaging using a "lucky imager"}{section.4}% 18
+\BOOKMARK [1][-]{section.5}{Spectroscopy}{}% 19
+\BOOKMARK [2][-]{subsection.5.1}{Observational Methods \046 Preparation}{section.5}% 20
+\BOOKMARK [2][-]{subsection.5.2}{Data Reduction \046 Spectrum Extraction}{section.5}% 21
+\BOOKMARK [2][-]{subsection.5.3}{Wavelength Calibration \046 Continuum Normalization}{section.5}% 22
+\BOOKMARK [2][-]{subsection.5.4}{Discussion}{section.5}% 23
+\BOOKMARK [1][-]{section.6}{Acknowledgements}{}% 24
+\BOOKMARK [1][-]{section.7}{References}{}% 25
+\BOOKMARK [1][-]{appendix.A}{Gaia data on the extracted sources of the three clusters}{}% 26
+\BOOKMARK [2][-]{subsection.A.1}{M34}{appendix.A}% 27
+\BOOKMARK [2][-]{subsection.A.2}{Teutsch 55}{appendix.A}% 28
+\BOOKMARK [2][-]{subsection.A.3}{Stock 19}{appendix.A}% 29
