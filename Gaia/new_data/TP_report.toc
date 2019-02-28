@@ -1,0 +1,7 @@
+\babel@toc {english}{}
+\contentsline {subsection}{\numberline {0.1}Imaging of open clusters}{3}{subsection.0.1}% 
+\contentsline {subsubsection}{\numberline {0.1.1}Determination of cluster membership using Gaia}{3}{subsubsection.0.1.1}% 
+\contentsline {paragraph}{\numberline {0.1.1.1}M34}{5}{paragraph.0.1.1.1}% 
+\contentsline {paragraph}{\numberline {0.1.1.2}Teutsch 55}{12}{paragraph.0.1.1.2}% 
+\contentsline {paragraph}{\numberline {0.1.1.3}Stock 19 (C0001+557)}{19}{paragraph.0.1.1.3}% 
+\contentsline {section}{\numberline {1}References}{26}{section.1}% 
