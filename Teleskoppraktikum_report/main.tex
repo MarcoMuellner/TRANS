@@ -7,10 +7,10 @@
 \usepackage{float} % for exact figure positioning
 \usepackage{pdflscape} %use landscape mode (for the appendix)
 \usepackage{longtable} %longtables for the appendix
+\usepackage{textcmds}
 
 \usepackage{hyperref}  % for hyperlinks in the text
 \hypersetup{colorlinks=true, allcolors=black, linktoc=all}
-
 
 \usepackage{siunitx}  %for SI units/units in general
 \DeclareSIUnit\pixel{px} % define unit for pixel
@@ -48,7 +48,7 @@
 
 \title{Teleskoppraktikum}
 \author{Marco Müllner, Sebastian Panny, David Weßmayer \& Sebastian Zieba}
-\date{October 2018 {-}February 2019}
+\date{October 2018 - February 2019}
 
 \begin{document}
 \maketitle
@@ -61,38 +61,35 @@
 \end{figure}
 
 \begin{abstract}
-The Innsbruck $\SI{60}{\cm}$ observatory provides an excellent opportunity for students to familiarize themselves with the operation, data acquisition and data reduction processes used in astronomy. In this work, we present our results of working with the instrument and the data acquired in the "Teleskoppraktikum" during the winter semester 2018/19 at the University of Innsbruck.
+The Innsbruck $\SI{60}{\cm}$ observatory provides an excellent opportunity for students to familiarize themselves with the operation, data acquisition and data reduction processes used in astronomy. In this work, we present our results of working with the instrument and the data acquired in the \ldq Teleskoppraktikum\rdq during the winter semester 2018/19 at the University of Innsbruck.
 
-In particular we describe the instrument calibration, the data reduction for imaging and spectroscopy and the results of our observations of open clusters, a comet, as well as stellar spectra. Furthermore we touch on the subject of lucky imaging and use catalogue data to investigate the status of open cluster candidates. 
+In particular we describe the instrument calibration, the data reduction for imaging and spectroscopy and the results of our observations of open clusters, a comet, as well as stellar spectra. Furthermore, we touch on the subject of lucky imaging and use catalog data to investigate the status of open cluster candidates. 
 \end{abstract}
 
-\newpage
+\pagebreak
 \tableofcontents
 
-\newpage
+\pagebreak
 \section{Introduction}
-%talk about telescope, instruments, software, expected problems, goals, darks/flats/bias what/why/how
 
-Learning how to operate a telescope and how to work with the data one can derive from observations of the sky is the primary goal of the "Teleskoppraktikum". The $\SI{60}{\cm}$ Cassegrain telescope at the observatory of the University of Innsbruck and the instruments available there, are the tools used to achieve our first real foray into astronomy. This report takes us from the utter excitement during our first observations to the results accomplished by weeks of team work and individual efforts via a slight detour to our first setbacks and our learning process. % Der Satz is ma jetzt selber zu hart, aber er bleibt!
+Learning how to operate a telescope and how to work with the data one can derive from observations of the sky is the primary goal of the \ldq Teleskoppraktikum\rdq. The $\SI{60}{\cm}$ Cassegrain telescope at the observatory of the University of Innsbruck and the instruments available there, are the tools used to achieve our first real foray into astronomy. This report takes us from the utter excitement during our first observations to the results accomplished by weeks of team work and individual efforts via a slight detour to our first setbacks and our learning process. 
 
-The Innsbruck $\SI{60}{\cm}$ telescope is located  atop the Victor Franz Hess building at the Technik campus of the University of Innsbruck ($00$h$45$m$22.20$s, $\SI{47}{\degree} \SI{15}{\arcmin}\SI{51.19}{\arcsec}$, $\SI{580}{\m}$ above sea level). It is the only ground based observatory used for our work during the "Teleskoppraktikum".
+The Innsbruck $\SI{60}{\cm}$ telescope is located  atop the Victor Franz Hess building at the Technik campus of the University of Innsbruck ($00$h$45$m$22.20$s, $\SI{47}{\degree} \SI{15}{\arcmin}\SI{51.19}{\arcsec}$, $\SI{580}{\m}$ above sea level). It is the only ground based observatory used for our work during the \ldq Teleskoppraktikum\rdq.
 
 The course takes place from late October 2018 to the end of February 2019, where the first few weeks are used for lectures on the basics of astronomy, telescope calibration and image reduction using tools like IRAF. From December on, we start with the actual observations, finishing in late January. Afterwards we work with the gathered data using a multitude of software tools and approaches to familiarize ourselves with the processes that are used regularly in astronomy.
 
-Altogether six days are used for observations, of which two are used for gathering calibration data, one for spectroscopy using an Echelle spectrograph one for both imaging and spectroscopy using a Littrow spectrograph and two specifically for imaging alone. Additionally some data is taken by the lecturers during the semester and is provided to us and the other students. 
+Altogether six days are used for observations, of which two are used for gathering calibration data, one for spectroscopy using an Echelle spectrograph one for both imaging and spectroscopy using a Littrow spectrograph and two specifically for imaging alone. Additionally, some data is taken by the lecturers during the semester and is provided to us and the other students. 
 
-This report showcases all the steps of our work during the "Teleskoppraktikum", starting with the calibration of the setup in section~\ref{sec:calibration} and an overview of the reduction procedure in section~\ref{sec:reduction}. Where the first one explains the determination of the optimal CCD temperature and pixel binning for the different cameras used and the second one the reduction of the various imaging data taken during the observation runs during the course. 
+This report showcases all the steps of our work during the \ldq Teleskoppraktikum\rdq, starting with the calibration of the setup in section~\ref{sec:calibration} and an overview of the reduction procedure in section~\ref{sec:reduction}. Where the first one explains the determination of the optimal CCD temperature and pixel binning for the different cameras used and the second one the reduction of the various imaging data taken during the observation runs during the course. 
 
-Next, in section~\ref{sec:imaging}, we describe the procdedure and hardships we encounter while using the telescope for imaging purposes. In particular the imaging of a comet close to Earth and open galactic clusters is explained in this section. We focus on the pocedure of extracting the position and brightness information of stars from an image, as well as the creation of Hertzsprung-Russell diagrams from images in several filters and the identification of probable members to the imaged clusters (and cluster candidates respectively) with data taken by the ESA spacecraft/mission Gaia. 
+Next, in section~\ref{sec:imaging}, we describe the procedure and hardships we encounter while using the telescope for imaging purposes. In particular the imaging of a comet close to Earth and open galactic clusters is explained in this section. We focus on the procedure of extracting the position and brightness information of stars from an image, as well as the creation of Hertzsprung-Russell diagrams from images in several filters and the identification of probable members to the imaged clusters (and cluster candidates respectively) with data taken by the ESA spacecraft/mission \textit{Gaia}. 
 
 In this section we additionally introduce lucky imaging as a method to counteract the influence of Earth's atmosphere on the image quality by reviewing the results of stacked images of Moon observations with a lucky imaging camera. 
 
 Finally, in section~\ref{sec:spectrum}, the spectra taken during the course are analyzed and the procedure of taking a spectrum and reducing the data received, is explained with the aid of the spectra of two bright and well studied stars Vega and Deneb.
 
-  
-
 \section{Calibration}\label{sec:calibration}
-In this first step we perform a calibration on camera 1 and 2, to find the good working temperatures for the cameras. We take multiple images for each temperature step, reducing statistical outliers and giving us a clearer picture on how the camera performs. We take images for all temperatures with a binning of 1 and 2.
+In this first step we perform a calibration on camera 1 and 2, to find the optimal working temperatures for the cameras. We take multiple images for each temperature step, reducing statistical outliers and giving us a clearer picture on how the camera performs. We take images for all temperatures with a binning of 1 and 2.
 \subsection{Bias calibration}\label{sec:bias_calib}
 \subsubsection{Camera 1}
 For camera 1 we get an initial set of 10 images for each temperature from $\SI{-5}{\celsius}$ to $\SI{-40}{\celsius}$ in $\SI{5}{\celsius}$ steps, with binning 1 and 2. These images are then combined, with outliers being clipped from the averaging process, giving us only real bias values. We then generate a master bias file for each temperature, that is then used for the dark calibration. Figure \ref{fig:Bias_old_b_1_calib} and figure \ref{fig:Bias_old_b_2_calib} show the resulting CCD images for binning 1 and 2.
@@ -109,7 +106,7 @@ Through visual inspection of these images, one can clearly see the emergence of 
     \caption{Same as figure \ref{fig:Bias_old_b_1_calib} but with binning 2. A even more distinct expression of vertical and horizontal structures is present for this setting.}
     \label{fig:Bias_old_b_2_calib}
 \end{figure}
-This effect in the biases lead us to the idea of disabling other cameras while taking images with the imager. We again take new biases for this camera, leading to the result shown in figure \ref{fig:Bias_new_b_1_calib}.
+This effect in the biases leads us to the idea of disabling other cameras while taking images with the imager. We again take new biases for this camera, leading to the result shown in figure \ref{fig:Bias_new_b_1_calib}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{calibration&reduction/bias.pdf}
@@ -180,11 +177,11 @@ Reduction of observed images with a modern telescope (imaging on a CCD) is a ver
 For this theoretical reduction we assume a more or less ideal CCD with no hot pixels, no cosmic rays or other problems in the dataset. This is of course not the case for a real life CCD, yet this is the fundamental block we will work with.\newline
 The first step in the reduction is the capturing of a bias image. This is usually done by simply reading out the CCD without opening the shutter of the camera. In theory, this is simply a constant value caused by the constant voltage applied to the detector itself. We call this value $\sigma_\text{b}$. The next step consists of taking a dark frame image. This gives us the dark current $\sigma_\text{d}$ in the dataset, representing the thermal electrons that are read out from the CCD through the ambient temperature of the chip. This effect is reduced to a minimum through the cooling of the chip (see section \ref{sec:calibration}). To compute the dark frame image, we expose the chip with the shutter closed for a given time (we usually choose around $\SI{30}{s}$). In the reduction, we then subtract the bias from the dark current and divide the image through its exposure time. The dark current is therefore
 \begin{equation}
-    \sigma_\text{d} = (\sigma_\text{d}' {-}\sigma_\text{b})/t_\text{exposure}
+    \sigma_\text{d} = (\sigma_\text{d}' -\sigma_\text{b})/t_\text{exposure}
 \end{equation}
-The last part that is needed is the so called flat field $\sigma_\text{f}$. Pixels on a CCD are not perfectly equally sensitive to exposure. There might be some structure in the CCD, stemming from the production of the chip or the readout electronics might have an effect. This means that any image exposed on the chip will not be uniformly well lit out, which is corrected using the flat field. To get a flat field image, multiple techniques are possible. For example we could use an evenly illuminated white flat surface which is then exposed on the CCD. This of course is a bit difficult, as the focal length of the telescope might not be perfectly aligned with such an object. We therefore chose to perform the second method for most of our later observations. For this, one starts the observations a bit earlier in twilight. We then take an image of the twilight in the horizon, giving us a decent enough lit out flat field of the CCD. To get the final flat field, we take this image and subtract the master bias and dark multiplied by the exposure time. This gives us
+The last part that is needed is the so called flat field $\sigma_\text{f}$. Pixels on a CCD are not perfectly equally sensitive to exposure. There might be some structure in the CCD, stemming from the production of the chip or the readout electronics might have an effect. This means that any image exposed on the chip will not be uniformly well lit out, which is corrected using the flat field. To get a flat field image, multiple techniques are possible. For example, we could use an evenly illuminated white flat surface which is then exposed on the CCD. This of course is a bit difficult, as the focal length of the telescope might not be perfectly aligned with such an object. We therefore chose to perform the second method for most of our later observations. For this, one starts the observations a bit earlier in twilight. We then take an image of the twilight in the horizon, giving us a decent enough lit out flat field of the CCD. To get the final flat field, we take this image and subtract the master bias and dark multiplied by the exposure time. This gives us
 \begin{equation}
-    \sigma_\text{f}' = (\sigma_\text{f}'' {-}\sigma_\text{b} {-}\sigma_\text{d}*t_\text{exposure})
+    \sigma_\text{f}' = (\sigma_\text{f}'' -\sigma_\text{b} -\sigma_\text{d}*t_\text{exposure})
 \end{equation}
 This, of course, is not enough, as we want to multiply the flat field with the observations of our target. We therefore divide the flat field through the median.
 \begin{equation}
@@ -193,28 +190,28 @@ This, of course, is not enough, as we want to multiply the flat field with the o
 The median is used, because we don't want to massively change the true pixel values of the dataset in our observations. Using the maximum could lead to non sensical pixel values in the CCD.\newline
 Finally, our observations can be reduced using these values. To reduce an observation, one subtracts the bias and dark current from the image and divides the image through the flat field. So to get real observational data we need to perform
 \begin{equation}
-    \text{IMG} = (\text{IMG}' {-}\sigma_\text{b} {-}\sigma_\text{d}*t_\text{exposure})/\sigma_\text{f}
+    \text{IMG} = (\text{IMG}' -\sigma_\text{b} -\sigma_\text{d}*t_\text{exposure})/\sigma_\text{f}
 \end{equation}
 which gives us the reduced CCD data.
 \subsection{Practical application}
-In practice, the CCD is of course not perfect. There are therefore multiple other steps that need to be taken to ensure a well enough reduction of the data set. To reduce statistical uncertainty in the data, we take multiple bias frames and dark frames. We then remove cosmics and outliers through the median and only accept values within a given range. These values are than averaged, giving us a good idea of the bias and dark frames. \newline
+In practice, the CCD is of course not perfect. There are therefore multiple other steps that need to be taken to ensure a well enough reduction of the data set. To reduce statistical uncertainty in the data, we take multiple bias frames and dark frames. We then remove cosmics and outliers through the median and only accept values within a given range. These values are then averaged, giving us a good idea of the bias and dark frames. \newline
 In principle, the twilight flat fields are a good method to get decent flats for the CCD. But we also need to take multiple images here, as even in twilight, stars are clearly visible in the image. We move the telescope slightly before each flat field, and perform the same combination method used for darks and bias images. We also need to create a flat field for every filter that is used in the observation, as these filters can have a significant impact on the image. It should be also noted, that temperatures need to be constant for this whole process, which is due to the different behaviour at different temperatures in the CCD.\newline
 This whole process was automated using a custom pipeline written in Python. This pipeline reads the images from a given folder, and given that this folder contains bias, dark and flat field frames, it computes a master dark, master bias and master flat for all filters in this folder and reduces all light frames. The information for each file is read out through the fits header of the file. We first combine the biases using an average combine method, and generate a master bias for a given data set. It then creates the dark by subtracting the master bias from every single dark frame, and combines them using the average combine technique. The flat images are created for every single filter and this is applied to the light frames taken for our targets.
 
 \section{Imaging}\label{sec:imaging}
 
-Imaging is the main objective of the second half of our "Teleskoppraktikum". The primary goal is to take images of several open clusters and possible candidates in different filters. From these images color magnitude diagrams are created. Additionally one can search for proper motion and distance information for the imaged stars in catalogues and use this information and the color of the stars to check their membership to the given open cluster or open cluster candidate. If these parameters can be gathered for enough stars, one can conclude whether the imaged cluster candidate is in fact an open cluster. Furthermore one can also get information on the size of the clusters with this technique. 
+Imaging is the main objective of the second half of our \ldq Teleskoppraktikum\rdq. The primary goal is to take images of several open clusters and possible candidates in different filters. From these images color magnitude diagrams are created. Additionally, one can search for proper motion and distance information for the imaged stars in catalogues and use this information and the color of the stars to check their membership to the given open cluster or open cluster candidate. If these parameters can be gathered for enough stars, one can conclude whether the imaged cluster candidate is in fact an open cluster. Furthermore one can also get information on the size of the clusters with this technique. 
 
 In addition to the imaging of clusters and cluster candidates we image comet 46P/Wirtanen as a target of opportunity. We also use the lucky imaging technique to image the moon in higher quality than would be possible with a classic imager.
 
 \subsection{Imaging of a comet}
 
-On December $13^\text{th}$ the weather conditions allow us to try to image comet 46P/Wirtanen, which had its closest approach to Earth around that time. The seeing is mediocre during the observation and the observation direction right towards the city does not help the image quality either. Furthermore the behaviour of the imaging camera (Camera 1) was not entirely understood at the time, which challenges us greatly during the reconstruction of the images.
+On December $13^\text{th}$ the weather conditions allow us to try to image comet 46P/Wirtanen, which had its closest approach to Earth around that time. The seeing is mediocre during the observation and the observation direction right towards the city does not help the image quality either. Furthermore, the behaviour of the imaging camera (Camera 1) was not entirely understood at the time, which challenges us greatly during the reconstruction of the images.
 The comet is seen over Innsbruck at a right ascension of $\num{03}\,$h$\,\num{37}\,$m$\,\num{20}\,$s and a declination of $\SI{11}{\degree} \num{45}'\num{26}"$ at around 18:00 CET. Therefore the observations are done at a very low angle above the city which explains the high background noise in all images taken of 46P.
 
-Searching for 46P/Wirtanen on the sky is done by interpolating between data points given in an ephemeris table \parencite{wirtanen} of the comet and manually pointing the telescope to the calculated coordinates. After finding the comet, the telescope position has to be readjusted occasionally as the comet is of course moving with respect to the reference frame of the stars which the telescope is tracking. Two $\SI{90}{\second}$ exposures of the comet are taken for each of the filters Johnson V, I and R. Furthermore we take bias and dark frames as well as flat fields for all three filters. In addition we then try to take a spectrum of the comet using camera 2 but unfortunately the comet is too faint and the conditions too bad to get usable data. The V, I and R images are also of mediocre quality, especially the V filter shows a very bad signal to background ratio. 
+Searching for 46P/Wirtanen on the sky is done by interpolating between data points given in an ephemeris table \parencite{wirtanen} of the comet and manually pointing the telescope to the calculated coordinates. After finding the comet, the telescope position has to be readjusted occasionally as the comet is of course moving with respect to the reference frame of the stars which the telescope is tracking. Two $\SI{90}{\second}$ exposures of the comet are taken for each of the filters Johnson V, I and R. Furthermore, we take bias and dark frames as well as flat fields for all three filters. In addition, we then try to take a spectrum of the comet using camera 2 but unfortunately the comet is too faint and the conditions too bad to get usable data. The V, I and R images are also of mediocre quality, especially the V filter shows a very bad signal to background ratio. 
 
-The reduction of the images is performed using our pipeline. Unfortunately the flat fields taken during the observation night are unusable as we did not complete the calibration of the camera, and chose a wrong temperature for the observation. To temporarily work around this and to be able to at least show a somewhat reduced image of 46P/Wirtanen we replace the flats with ones taken in January at a different temperature which of course only removes influence of dust on the filter wheels but not the influence of the CCD at the time of observation. The three color composition of the "reduced" V,I and R images can be seen in figure ~\ref{fig:wirtanen}. Obviously this is not a true RGB composition but rather a stack of the individual colorized images but a true composition is unfortunately rather bad, as one can see in figure~\ref{fig:wirtanen_start} which also shows the original unmatched V, I and R channels overlaid. These are fairly nice to look at, but are of little scientific value.
+The reduction of the images is performed using our pipeline. Unfortunately the flat fields taken during the observation night are unusable as we did not complete the calibration of the camera, and chose a wrong temperature for the observation. To temporarily work around this and to be able to at least show a somewhat reduced image of 46P/Wirtanen we replace the flats with ones taken in January at a different temperature which of course only removes the influence of dust on the filter wheels but not the influence of the CCD at the time of observation. The three color composition of the \ldq reduced\rdq V,I and R images can be seen in figure ~\ref{fig:wirtanen}. Obviously this is not a true RGB composition but rather a stack of the individual colorized images but a true composition is unfortunately rather bad, as one can see in figure~\ref{fig:wirtanen_start} which also shows the original unmatched V, I and R channels overlaid. These are fairly nice to look at, but are of little scientific value.
 
 \begin{figure}[H]
     \centering
@@ -249,7 +246,7 @@ The reduction of the images is performed using our pipeline. Unfortunately the f
 
 From the offset of the comet in different images and the known times at which the images are taken one can try to reconstruct the velocity of the comet across the sky. When doing this we encounter the problem that our imaging software does not include the telescope pointing position in the FITS header which means that we have no reference which pixel in the image corresponds to which position on the sky. Adding this information later is complicated as there are distortions on the projected image from the telescope optics and the spherical sky which rules out a linear conversion from identifying two stars and using their position to convert from pixels to right ascension and declination. 
 
-Therefore we use the Astrometry.net tool~\parencite{Astrometry} to find the world coordinate system (WCS) for our images. For this the tool uses a geometric hash code of four parameters which characterize the position on the sky of four stars independent of the image scale and rotation. The definition of these four parameters can be seen in figure~\ref{fig:quad}. Astrometry.net extracts the sources in the input image and builds a set of these parameters for every combination of four stars detected. These parameter sets are then compared with a database of index files which has been generated from several star catalogues like Tycho-2, 2Mass and USNO-B. If the parameters from the input image match the ones in the database, the position, rotation and scale of the world coordinate system is known and therefore the WCS is added to the header of the input .fits file. Surprisingly this nifty technique works, despite the image quality and low number of visible stars, for five of the six images of 46P/Wirtanen. 
+Therefore, we use the Astrometry.net tool~\parencite{Astrometry} to find the world coordinate system (WCS) for our images. For this the tool uses a geometric hash code of four parameters which characterize the position on the sky of four stars independent of the image scale and rotation. The definition of these four parameters can be seen in figure~\ref{fig:quad}. Astrometry.net extracts the sources in the input image and builds a set of these parameters for every combination of four stars detected. These parameter sets are then compared with a database of index files which has been generated from several star catalogues like Tycho-2, 2Mass and USNO-B. If the parameters from the input image match the ones in the database, the position, rotation and scale of the world coordinate system is known and therefore the WCS is added to the header of the input .fits file. Surprisingly this nifty technique works, despite the image quality and low number of visible stars, for five of the six images of 46P/Wirtanen. 
 
 \begin{figure}[H]
     \centering
@@ -262,13 +259,13 @@ As the output of Astrometry.net gives the star positions but no brightness of th
 
 \subsection{Imaging of open clusters}
 
-We image open galactic clusters in order to create Hertzsprung-Russell (HR) diagrams and study the membership of the individual stars to the clusters. The studied objects are M34, Teutsch 55, C0001+557 (also known as Stock 19) and Patchick 78. While the first one, M34, is very well studied the other three are not. All of them are located on the northern sky and therefore readily observable from Innsbruck. Two observation nights on the $16^{\text{th}}$ and $22^{\text{nd}}$ of January 2019 are used to observe these objects. M34 and Patchick 78 are only observed during the first night, C0001+557  only during the second night and Teutsch55 during both nights. While observing Patchick 78 it quickly becomes clear that the members of this cluster are mostly too faint and therefore observations of it are stopped immediately in favor of Teutsch 55. Prolonging the exposure time for Patchick 78 is not possible as the images become too background dominated.
+We image open galactic clusters in order to create Hertzsprung-Russell (HR) diagrams and study the membership of the individual stars to the clusters. The studied objects are M34, Teutsch 55, C0001+557 (also known as Stock 19) and Patchick 78. While the first one, M34, is very well studied the other three are not. All of them are located on the northern sky and therefore readily observable from Innsbruck. Two observation nights on the $16^{\text{th}}$ and $22^{\text{nd}}$ of January 2019 are used to observe these objects. M34 and Patchick 78 are only observed during the first night, Stock 19  only during the second night and Teutsch55 during both nights. While observing Patchick 78 it quickly becomes clear that the members of this cluster are mostly too faint and therefore observations of it are stopped immediately in favor of Teutsch 55. Prolonging the exposure time for Patchick 78 is not possible as the images become too background dominated.
 
-The images of the clusters are reduced using our reduction pipeline and then given a world coordinate system using the Astrometry.net tool. As the observation conditions during the two nights in January were much better than the one where 46P/Wirtanen was imaged in December, all images have a unique solution for their world coordinate system. This leads to the possibility of automatically searching the Gaia DR2 catalogue with the coordinates of all cluster stars derived from the WCS. For this automatic Gaia query we use the Python package astroquery~\parencite{astroquery}. This procedure will be discussed in more detail in section~\ref{sec:Gaia}. A RGB composite image of one of the studied clusters can be seen in figure~\ref{fig:title} on the title page.
+The images of the clusters are reduced using our reduction pipeline and then given a world coordinate system using the Astrometry.net tool. As the observation conditions during the two nights in January were much better than the one where 46P/Wirtanen was imaged in December, all images have a unique solution for their world coordinate system. This leads to the possibility of automatically searching the \textit{Gaia DR2} catalogue with the coordinates of all cluster stars derived from the WCS. For this automatic \textit{Gaia} query we use the Python package astroquery~\parencite{astroquery}. This procedure will be discussed in more detail in section~\ref{sec:Gaia}. A RGB composite image of one of the studied clusters can be seen in figure~\ref{fig:title} on the title page.
 
 \subsubsection{Hertzsprung-Russell diagrams}
 
-As we image the open clusters in four different filters we can create HR diagrams in the form of color-magnitude-diagrams. The lack of magnitude calibration/zero point for our telescope does not affect these as only differences of colors are relevant, which of course do not depend on the absolute scale of the brightness of the stars. To create the observational HR diagrams we extract the sources from four images in the different filters (Johnson V,I,R,B) using SExtractor~\parencite{SExtractor}. This gives us the extracted position and brightness of the imaged stars in every filter. Some stars are only visible in part of the images, as they are for example brighter in the blue and therefore fainter or even not visible in the redder filters. This, of course, has to be taken into account when creating HR-diagrams. Therefore we only use extracted stars which can be found in all filters on the same pixel position in the image (with a tolerance of $\SI{\pm 3}{\pixel}$).
+As we image the open clusters in four different filters we can create HR diagrams in the form of color-magnitude-diagrams. The lack of magnitude calibration/zero point for our telescope does not affect these as only differences of colors are relevant, which of course do not depend on the absolute scale of the brightness of the stars. To create the observational HR diagrams we extract the sources from four images in the different filters (Johnson V,I,R,B) using SExtractor~\parencite{SExtractor}. This gives us the extracted position and brightness of the imaged stars in every filter. Some stars are only visible in part of the images, as they are for example brighter in the blue and therefore fainter or even not visible in the redder filters. This, of course, has to be taken into account when creating HR-diagrams. Therefore we only use extracted stars which can be found in all filters on the same pixel position in the image (with a tolerance of $\SI{\pm 3}{\pixel}$). For this procedure images with an exposure time of several hundred seconds (depending on the filter) are used, in order to make sure that even faint sources are included in the study.
 
 The number of sources extracted varies greatly with the input parameters of the source extraction process. Primarily the threshold above which a pixel is counted as non background and the minimum area of joint pixels above this threshold indicate whether a bright spot in the image is a star or not. Furthermore, the seeing can be (in part) compensated by allowing for objects with a rather high FWHM to be still considered stars and not extended objects. The level of the background can also be adjusted individually for each filter. If the parameters chosen are too constricting no stars are extracted from the image, however if they are not constricting enough, large areas of the background are detected as extended sources. Both of which is unwanted and therefore compensated by redoing the analysis with different input parameters. 
 
@@ -286,11 +283,11 @@ SExtractor has hundreds of possible return values of which we are interested in 
 \subsubsection{Determination of cluster membership using Gaia}
 \label{sec:Gaia}
 
-The automatic query search for Gaia DR2 entries for the extracted stars is done using the Python/astropy package astroquery~\parencite{astroquery}. The tool searches the online Gaia DR2 catalog for the positions extracted by SExtractor for the given clusters. The query returns the complete Gaia entry of the star which includes the source ID, position, proper motion, parallax, and other parameters depending on which were measured by Gaia. 
+The automatic query search for \textit{Gaia DR2} entries for the extracted stars is done using the Python/astropy package astroquery~\parencite{astroquery}. The tool searches the online \textit{Gaia DR2} catalog for the positions extracted by SExtractor for the given clusters. The query returns the complete \textit{Gaia}entry of the star which includes the source ID, position, proper motion, parallax, and other parameters depending on which were measured by Gaia. 
 
-As the Gaia DR2 catalog has a lot of entries often times the query returns more than one Gaia entry for an extracted position. In this case we ignore the star at the extracted position for the further analysis as it is often not possible to tell which of the entries is the correct one. In very rare cases we can not find a Gaia entry for a extracted position which also leads to us skipping the position. 
+As the \textit{Gaia DR2} catalog has a lot of entries often times the query returns more than one \textit{Gaia}entry for an extracted position. In this case we ignore the star at the extracted position for the further analysis as it is often not possible to tell which of the entries is the correct one. In very rare cases we can not find a \textit{Gaia}entry for an extracted position which also leads to us skipping the position. 
 
-The whole process is done only for the sources which are present in all four filters for each cluster candidate as we want to be able to use the color of the stars as an indicator of their cluster membership. Unfortunately this also means that there are very little sources for which we have a Gaia entry and a color, especially for Teutsch 55 and Stock 19 (under 20 stars in both cases). Therefore we decide to not go further into this automated search but rather use the old fashioned way of looking at the images, numbering the stars, looking up their Gaia ID and finding their parameters this way (i.e. using a human SExtractor). %Wollt i unbedingt erwähnen %LOL... fantastisch!
+The whole process is done only for the sources which are present in all four filters for each cluster candidate as we want to be able to use the color of the stars as an indicator of their cluster membership. Unfortunately this also means that there are very little sources for which we have a \textit{Gaia}entry and a color, especially for Teutsch 55 and Stock 19 (under 20 stars in both cases). Therefore we decide to not go further into this automated search but rather use the old fashioned way of looking at the images, numbering the stars, looking up their \textit{Gaia}ID and finding their parameters this way (i.e. using a human SExtractor). %Wollt i unbedingt erwähnen %LOL... fantastisch!
 Of course this unfortunately removes the color information as the reverse process of looking up the stars in all our images is tedious and error prone. Therefore we decide to solely rely on proper motion and distance information for determining cluster membership. The manual method proves to be the vastly superior one, although the immense time consumption is usually very hard to justify.  
 
 So in order to determine the membership of the imaged stars to a cluster, we followed the following procedure shown in the flowchart (figure \ref{fig:flowchart}). It and the followed analysis will be quickly summarized in the following:
@@ -301,7 +298,7 @@ So in order to determine the membership of the imaged stars to a cluster, we fol
 \item If it is visible in both images, put a number on this star (cf. \ref{fig:obsM34_num} and \ref{fig:DSS2M34_num}).
 \item Use \textit{Aladin} in order to find the corresponding \textit{Gaia DR2 source IDs} (SIDs) to those stars. However, if there were multiple sources very close to each other, this source was not used.
 \item Import those extracted \textit{SID}s in the \textit{ESA Gaia archive}\footnote{\url{https://gea.esac.esa.int/archive/}} (\cite{Gaia2016}, \cite{Gaia2018}).
-\item Extract valuable properties like: right ascension, declination, the proper motion in those directions, the Gaia magnitude, the parallax and the errors of those values.
+\item Extract valuable properties like: right ascension, declination, the proper motion in those directions, the \textit{Gaia}magnitude, the parallax and the errors of those values.
 \item Using the position and magnitude of every light source we can reconstruct our observation image (cf. \ref{fig:M34_pm}). The proper motion can also be illustrated by arrows originating from the corresponding star.
 \item Now we can take a look at the distribution of distances and proper motions using a histogram (cf. \ref{fig:M34_histogram_all}). We can exclude outliers in distance and the proper motions using an iterative three sigma clipping procedure. Meaning, we removed all stars outside the three sigma regime with respect to the median. This eliminated outliers with high or low distances or proper motions. This clipping was repeated until nothing was 'clipable' anymore. Notice that having the right distance is not enough; you also need the right proper motion. Using a Gaussian fit on the remaining stars, which will be called cluster members (CMs) from here on, gives us our guess for the distance and the mean proper motion of this cluster.
 \item As an independent check we also have a look at the radial velocities of our CMs (cf. \ref{fig:M34_histogram_RV}). Our CMs should not be seen as outliers here.
@@ -327,7 +324,7 @@ Obs. date          & Jan. 16$^{\text{th}}$ & Jan. 16$^{\text{th}}$  & Jan. 22$^{
 Filter             & R         & R          & R         \\
 Exposure time (s)  & 150       & 300        & 200       \\ \hline
 Num. stars         & 195       & 191        & 208       \\
-No Gaia DR2 entry  & 0         & 0          & 1         \\
+No \textit{Gaia DR2} entry  & 0         & 0          & 1         \\
 Not used           & 6         & 5          & 0         \\
 Two parameter sol. & 3         & 3          & 2         \\
 Neg. parallax      & 2         & 0          & 2         \\
@@ -336,7 +333,7 @@ RV stars           & 28        & 33         & 37
 \end{tabular}
 \end{table}
 
-In the appendix (\ref{sec:appendix}) one finds the Gaia data of all extracted stars {-}the cluster members, the non-cluster members and the stars, which were not analyzed. 
+In the appendix (\ref{sec:appendix}) one finds the \textit{Gaia}data of all extracted stars - the cluster members, the non-cluster members and the stars, which were not analyzed. 
 
 \paragraph{M34}
 
@@ -357,7 +354,7 @@ In the appendix (\ref{sec:appendix}) one finds the Gaia data of all extracted st
 \begin{figure}[H]
   \centering
     \includegraphics[trim={0 1.6cm 0 2.3cm},clip, width=0.95\textwidth]{Cluster/M34_pm.pdf}
-  \caption{Every point is an extracted source. The size corresponds to the Gaia magnitude. The arrows illustrate the direction of the proper motion. A star was for example not analysed if the proper motions were missing.}
+  \caption{Every point is an extracted source. The size corresponds to the \textit{Gaia}magnitude. The arrows illustrate the direction of the proper motion. A star was for example not analysed if the proper motions were missing.}
   \label{fig:M34_pm}
 \end{figure}
 
@@ -373,14 +370,14 @@ This figure \ref{fig:M34_pm} already illustrates that most stars are moving in t
 \begin{figure}[H]
   \centering
     \includegraphics[trim={0 0 2cm 0},clip,width=0.95\textwidth]{Cluster/M34_histogram_RV.pdf}
-  \caption{An histogram of the radial velocities. In gray our cluster members determined with figure \ref{fig:M34_histogram_all}. We see that non of the outliers are also CMs. This is what we would expect.}
+  \caption{A histogram of the radial velocities. In gray our cluster members determined with figure \ref{fig:M34_histogram_all}. We see that non of the outliers are also CMs. This is what we would expect.}
   \label{fig:M34_histogram_RV}
 \end{figure}
 
 \begin{figure}[H]
   \centering
     \includegraphics[trim={0 0.4cm 0 0.2cm},clip,width=0.65\textwidth]{Cluster/M34_histogram_mags.pdf}
-  \caption{The distribution of Gaia magnitudes of the analyzed stars.}
+  \caption{The distribution of \textit{Gaia}magnitudes of the analyzed stars.}
   \label{fig:M34_histogram_mags}
 \end{figure}
 
@@ -398,7 +395,7 @@ This figure \ref{fig:M34_pm} already illustrates that most stars are moving in t
   \label{fig:M34_pm_mask}
 \end{figure}
 
-Those last few plots clearly shows us that those stars really make us a cluster. Our cluster distance of (509 $\pm$ 26) pc agrees with the literature value of 513 pc \cite{Cantat2018}. We want to bring up that SIMBAD incorrectly classifies some stars as member stars of M34. E.g. \textit{Gaia DR2 337177889338182400\footnote{\url{http://simbad.u-strasbg.fr/simbad/sim-basic?Ident=Gaia+DR2+337177889338182400&submit=SIMBAD+search}}} {-}this star has an distance of (126 $\pm$ 1) pc according to \textit{Gaia}. This would be about 400 parsec away from the core of the cluster. 
+Those last few plots clearly show us that those stars really make up a cluster. Our cluster distance of (509 $\pm$ 26) pc agrees with the literature value of 513 pc \cite{Cantat2018}. We want to bring up that SIMBAD incorrectly classifies some stars as member stars of M34. E.g. \textit{Gaia DR2 337177889338182400\footnote{\url{http://simbad.u-strasbg.fr/simbad/sim-basic?Ident=Gaia+DR2+337177889338182400&submit=SIMBAD+search}}} - this star has a distance of (126 $\pm$ 1) pc according to \textit{Gaia}. This would be about 400 parsec away from the core of the cluster. 
 
 \paragraph{Teutsch 55}
 
@@ -419,7 +416,7 @@ Those last few plots clearly shows us that those stars really make us a cluster.
 \begin{figure}[H]
   \centering
     \includegraphics[trim={0 1.6cm 0 2.3cm},clip, width=0.95\textwidth]{Cluster/Teutsch55_pm.pdf}
-  \caption{Every point is an extracted source. The size corresponds to the Gaia magnitude. The arrows illustrate the direction of the proper motion. A star was for example not analyzed if the proper motions were missing.}
+  \caption{Every point is an extracted source. The size corresponds to the \textit{Gaia}magnitude. The arrows illustrate the direction of the proper motion. A star was for example not analyzed if the proper motions were missing.}
   \label{fig:Teutsch55_pm}
 \end{figure}
 
@@ -441,7 +438,7 @@ Those last few plots clearly shows us that those stars really make us a cluster.
 \begin{figure}[H]
   \centering
     \includegraphics[trim={0 0.4cm 0 0.2cm},clip,width=0.65\textwidth]{Cluster/Teutsch55_histogram_mags.pdf}
-  \caption{The distribution of Gaia magnitudes of the analyzed stars.}
+  \caption{The distribution of \textit{Gaia}magnitudes of the analyzed stars.}
   \label{fig:Teutsch55_histogram_mags}
 \end{figure}
 
@@ -459,7 +456,7 @@ Those last few plots clearly shows us that those stars really make us a cluster.
   \label{fig:Teutsch55_pm_mask}
 \end{figure}
 
-In contrast M34 (\ref{fig:M34_pm_mask}) we do not see, that those stars are moving as a group in one direction. We also see this very broad distribution in distances and proper motions in figure \ref{fig:Teutsch55_histogram_all}. So we cannot really confirm this cluster.
+In contrast M34 (cf.~\ref{fig:M34_pm_mask}) we do not see, that those stars are moving as a group in one direction. We also see this very broad distribution in distances and proper motions in figure \ref{fig:Teutsch55_histogram_all}. So we cannot really confirm this cluster.
 
 \paragraph{Stock 19 (C0001+557)}
 
@@ -477,12 +474,12 @@ In contrast M34 (\ref{fig:M34_pm_mask}) we do not see, that those stars are movi
   \label{fig:DSS2Stock19_num}
 \end{figure}
 
-The only light source we observed {-}of the about 600 in total {-}without a Gaia DR2 entry is star 124 (in the lower middle of \ref{fig:obsStock19_num} and \ref{fig:DSS2Stock19_num}) known as TYC 3656-465-1. The specific reason that this star has no Gaia entry is unknown. It however has a 2MASS entry. The stars magnitude is at about 11 (visual).  
+The only light source we observed - of the about 600 in total - without a \textit{Gaia DR2} entry is star 124 (in the lower middle of \ref{fig:obsStock19_num} and \ref{fig:DSS2Stock19_num}) known as TYC 3656-465-1. The specific reason that this star has no \textit{Gaia}entry is unknown. It however has a 2MASS entry. The stars magnitude is at about 11 (visual).  
 
 \begin{figure}[H]
   \centering
     \includegraphics[trim={0 1.6cm 0 2.3cm},clip, width=0.95\textwidth]{Cluster/Stock19_pm.pdf}
-  \caption{Every point is an extracted source. The size corresponds to the Gaia magnitude. The arrows illustrate the direction of the proper motion. A star was for example not analyzed if the proper motions were missing.}
+  \caption{Every point is an extracted source. The size corresponds to the \textit{Gaia}magnitude. The arrows illustrate the direction of the proper motion. A star was for example not analyzed if the proper motions were missing.}
   \label{fig:Stock19_pm}
 \end{figure}
 
@@ -503,7 +500,7 @@ The only light source we observed {-}of the about 600 in total {-}without a Gaia
 \begin{figure}[H]
   \centering
     \includegraphics[trim={0 0.4cm 0 0.2cm},clip,width=0.65\textwidth]{Cluster/Stock19_histogram_mags.pdf}
-  \caption{The distribution of Gaia magnitudes of the analyzed stars.}
+  \caption{The distribution of \textit{Gaia}magnitudes of the analyzed stars.}
   \label{fig:Stock19_histogram_mags}
 \end{figure}
 
@@ -521,15 +518,15 @@ The only light source we observed {-}of the about 600 in total {-}without a Gaia
   \label{fig:Stock19_pm_mask}
 \end{figure}
 
-Similar to \ref{fig:Teutsch55_pm_mask}, but in contrast to figure \ref{fig:M34_pm_mask} we do not see, that those stars are moving as a group in one direction. We also see this very broad distribution in distances and proper motions in figure \ref{fig:Stock19_histogram_all}. So we cannot really confirm this cluster.
+Similar to figure~\ref{fig:Teutsch55_pm_mask}, but in contrast to figure \ref{fig:M34_pm_mask} we do not see, that those stars are moving as a group in one direction. We also see this very broad distribution in distances and proper motions in figure \ref{fig:Stock19_histogram_all}. So we cannot really confirm this cluster.
 
-To conclude, it proves to be rather difficult to tell whether the imaged objects actually can be classified as galactic open clusters. It might be interesting to look at the color of the suspected cluster members but we do not have color information for a sufficient amount of stars in the images as extracting sources from the images is not trivial, especially in the Johnson B filter. Furthermore, Gaia data has to be studied very thoroughly as often times measured properties are wrong in a very obvious way, for example negative parallaxes can be found for several stars.  
+To conclude, it proves to be rather difficult to tell whether the imaged objects actually can be classified as galactic open clusters. It might be interesting to look at the color of the suspected cluster members, but we do not have color information for a sufficient amount of stars in the images as extracting sources from the images is not trivial, especially in the Johnson B filter. Furthermore, \textit{Gaia}data has to be studied very thoroughly as often times measured properties are wrong in a very obvious way, for example negative parallaxes can be found for several stars.  
 
-\subsection{Imaging using a "lucky imager"}
+\subsection{Imaging using a lucky imager}
 
 Lucky imaging is a technique used to counteract the negative influence of the turbulence in the air of the Earth's atmosphere. During long exposures the movement of the atmosphere smears out the imaged object which results in sub optimal images. Therefore the idea is to reduce exposure time to a minimum by basically taking a video of the object one wants to image. From the video one can select the frame or frames which show the least amount of turbulence in the atmosphere. This technique is therefore only nicely applicable for setups and sources which do not require long exposure times.
 
-In practice the selection of high quality frames is not done manually but with an automated software algorithm like the one used by Autostakkert~\parencite{autostakkert}, which we use for generating the images taken with the lucky imaging camera. Software like this automatically stacks single frames from a video which have a high quality according to an algorithm which looks at, for example, the FWHM of stars or the surface structures of the moon. For stacking, the images are aligned using the brightest pixels as reference before being combined. Afterwards it is possible to apply artificial sharpening via a convolution. 
+In practice the selection of high quality frames is not done manually but with an automated software algorithm like the one used by Autostakkert~\parencite{autostakkert}, which we use for generating the images taken with the lucky imaging camera. Software like this automatically stacks single frames from a video which have a high quality according to an algorithm which looks at, for example, the FWHM of stars or the surface structures on the Moon. For stacking, the images are aligned using the brightest pixels as reference before being combined. Afterwards it is possible to apply artificial sharpening via a convolution. 
 
 The influence of this sharpening convolution can be seen in figure~\ref{fig:moon_comp_sharp} and the overall improvement which can be achieved using lucky imaging is shown in figure~\ref{fig:moon_comp_av}. The videos from which these images are generated are taken with the 60cm telescope and the lucky imaging camera on December $13^\text{th}$ while waiting for the comet 46P/Wirtanen to appear above the horizon. As already mentioned in the section about imaging this comet, the seeing was not great that night however the lucky images of the moon are of an impressively high quality given the setup and location. 
 
@@ -562,10 +559,10 @@ The influence of this sharpening convolution can be seen in figure~\ref{fig:moon
 \end{figure}
 
 \section{Spectroscopy}\label{sec:spectrum}
-In this section of our report, we describe the methods of spectroscopy using the Lhires III spectrograph. Subsection~\ref{ss:1} gives a summary of observational methods including a short overview of the inner workings of a Littrow-Spectrograph and the means of preparation in order to reduce the taken spectra. In subsection~\ref{ss:2} we report on how to reduce and extract a spectrum from a CCD image using IRAF. Continuing in subsection~\ref{ss:3} we show how to map CCD pixel number to a wavelength scale in order to calibrate the spectrum and how to normalize the continuum. Finishing up in~\ref{ss:4} we will discuss observed spectra from two well known sources (Vega {-}$\alpha$ Lyrae  $\&$ Deneb {-}$\alpha$ Cygni) concerning problems that our method of observation may show. 
-\subsection{Observational Methods \& Preparation}
+In this section of our report, we describe the methods of spectroscopy using the Lhires III spectrograph. Subsection~\ref{ss:1} gives a summary of observational methods including a short overview of the inner workings of a Littrow-Spectrograph and the means of preparation in order to reduce the taken spectra. In subsection~\ref{ss:2} we report on how to reduce and extract a spectrum from a CCD image using IRAF. Continuing in subsection~\ref{ss:3} we show how to map CCD pixel number to a wavelength scale in order to calibrate the spectrum and how to normalize the continuum. Finishing up in~\ref{ss:4} we will discuss observed spectra from two well known sources (Vega - $\alpha$ Lyrae  $\&$ Deneb - $\alpha$ Cygni) concerning problems that our method of observation may show. 
+\subsection{Observational methods \& preparation}
 \label{ss:1}
-As documented in~\parencite{Shelyak_Instruments} Lhires III (\underline{L}ittrow \underline{H}igh \underline{RE}solution \underline{S}pectrograph) is a spectrograph in Littrow configuration meaning it has an optical path and general structure as in figure~\ref{fig:1}. Rendering this special kind of setup for a spectrograph, both compact and affordable, the Littrow configuration is defined by having the same optical element {-}a 200mm lens {-}be both the collimator, parallelizing the beam, and the imaging lens at once. The diffraction grating (300 lines per mm) allows for expected spectral dispersions of 1.493 \AA ~per pixel. In the vicinity of the H Alpha line in the red part of the spectrum, the resolving power $\frac{\Delta\lambda}{\lambda}$ is approximately 1300. A spreadsheet ~\parencite{Shelyak_Instruments} with simulated results, assuming a telescope aperture of $\text{D}=\SI{60}{\cm}$ and a focal ratio $\frac{\text{F}}{\text{D}}=8$, defines the limiting magnitude in a one hour ($\frac{\text{S}}{\text{N}}=\num{100}$) exposure to be $\text{m}=\num{11.3}$, when simulated with a target star of type B0V.\\
+As documented in~\parencite{Shelyak_Instruments} Lhires III (\underline{L}ittrow \underline{H}igh \underline{RE}solution \underline{S}pectrograph) is a spectrograph in Littrow configuration meaning it has an optical path and general structure as in figure~\ref{fig:1}. Rendering this special kind of setup for a spectrograph, both compact and affordable, the Littrow configuration is defined by having the same optical element - a 200mm lens - be both the collimator, parallelizing the beam, and the imaging lens at once. The diffraction grating (300 lines per mm) allows for expected spectral dispersions of $\SI{1.493}{\angstrom\per\pixel}$. In the vicinity of the H Alpha line in the red part of the spectrum, the resolving power $\frac{\Delta\lambda}{\lambda}$ is approximately $1300$. A spreadsheet ~\parencite{Shelyak_Instruments} with simulated results, assuming a telescope aperture of $\text{D}=\SI{60}{\cm}$ and a focal ratio $\frac{\text{F}}{\text{D}}=8$, defines the limiting magnitude in a one hour ($\frac{\text{S}}{\text{N}}=\num{100}$) exposure to be $\text{m}=\num{11.3}$, when simulated with a target star of type B0V.\\
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.75\textwidth]{spectroscopy/littrow.png}
@@ -573,49 +570,49 @@ As documented in~\parencite{Shelyak_Instruments} Lhires III (\underline{L}ittrow
 	\label{fig:1}
 \end{figure}
 
-Let us now look at preparation steps to take in order to observe real spectra with this tool. First, since the observation of spectra in this fashion uses CCD imaging, we need to take several bias, dark and flat images to later reduce the images as described in section \ref{ss:2}. Furthermore, calibration images of a neon reference lamp have to be taken in order to do the wavelength calibration~(subsection \ref{ss:3}). One such image of the emission lines of neon and other residual elements can be seen in figure~\ref{fig:2}. The tricky part in taking this image is exposing long enough to have good signal to noise values in the weak emission lines (rightmost part of the image), while not over exposing the strong lines in the center. An exposure time of $t=\SI{10}{\second}$ proved favorable in our case. Once done with taking several of these line calibration images one can start to search for an object on the sky to observe and center it in the middle of the field of view using an imaging camera. Coming to the tricky part of the quest, we now need to focus the image of the object on the entrance slit of the spectrograph. Once this is accomplished an image of the object, such as the spectrum of the star Vega ($\alpha$ Lyrae) with an exposure time of $t=\SI{200}{\second}$, can be taken {-}see figure \ref{fig:3}. 
+Let us now look at preparation steps to take in order to observe real spectra with this tool. First, since the observation of spectra in this fashion uses CCD imaging, we need to take several bias, dark and flat images to later reduce the images as described in section \ref{ss:2}. Furthermore, calibration images of a neon reference lamp have to be taken in order to do the wavelength calibration~(subsection \ref{ss:3}). One such image of the emission lines of neon and other residual elements can be seen in figure~\ref{fig:2}. The tricky part in taking this image is exposing long enough to have good signal to noise values in the weak emission lines (rightmost part of the image), while not over exposing the strong lines in the center. An exposure time of $t=\SI{10}{\second}$ proved favorable in our case. Once done with taking several of these line calibration images one can start to search for an object on the sky to observe and center it in the middle of the field of view using an imaging camera. Coming to the tricky part of the quest, we now need to focus the image of the object on the entrance slit of the spectrograph. Once this is accomplished an image of the object, such as the spectrum of the star Vega ($\alpha$ Lyrae) with an exposure time of $t=\SI{200}{\second}$, can be taken - see figure \ref{fig:3}. 
 
 \begin{figure}[H]
   	\centering
 	\includegraphics[width=1.00\textwidth]{spectroscopy/calibration_ccd_image.jpg}
-  	\caption{This figure shows a CCD image of the neon calibration lamp. It's easy to see that there are insufficiently many lines in the blue wavelength regime (leftmost part). Still, it is possible to find at least some weak lines of residual elements such as quicksilver.}
+  	\caption{This figure shows a CCD image of the neon calibration lamp. It is easy to see that there are insufficiently many lines in the blue wavelength regime (leftmost part). Still, it is possible to find at least some weak lines of residual elements such as quicksilver.}
   	\label{fig:2}
 \end{figure}
 
 \begin{figure}[H]
   	\centering
     \includegraphics[width=1.00\textwidth]{spectroscopy/spectrum_ccd_image.jpg}
-  	\caption{This figure shows the CCD-Image of the spectrum of the star "Vega" {-}$\alpha$ ~Lyrae. The image was taken with an exposure time of $t=200$s. Already, one can clearly see structures such as Hydrogen Balmer lines and water absorption regions.}
+  	\caption{This figure shows the CCD-Image of the spectrum of the star \ldq Vega\rdq - $\alpha$ ~Lyrae. The image was taken with an exposure time of $t=200$s. Already, one can clearly see structures such as Hydrogen Balmer lines and water absorption regions.}
   	\label{fig:3}
 \end{figure}
 
-\subsection{Data Reduction \& Spectrum Extraction}
+\subsection{Data reduction \& spectrum extraction}
 \label{ss:2}
 As the description of each individual command in IRAF concerning the reduction of the spectrum would certainly exceed the volume of this report I want to instead just refer to the excellent instructions given in chapter 4 of~\parencite{IRAF_Manual}, which the following procedures are based upon.\\\\The first step to take in extracting the spectrum is finding the correct aperture of the spectrum on the CCD image. One may, perhaps, erroneously think that the whole illuminated part of the image in figure~\ref{fig:3} is the spectrum.
 \begin{figure}[H]
   	\centering
     \includegraphics[width=1.00\textwidth]{spectroscopy/aperture_choosing.jpg}
-  	\caption{This figure shows a plot of measured instrumental intensity as a function of the CCD row number. This configuration is used to choose the correct aperture on the chip using the command "apall".}
+  	\caption{This figure shows a plot of measured instrumental intensity as a function of the CCD row number. This configuration is used to choose the correct aperture on the chip using the command \ldq apall\rdq.}
   	\label{fig:4}
 \end{figure}
 \begin{figure}[H]
 	\centering
     \includegraphics[width=1.00\textwidth]{spectroscopy/aperture_fitting.jpg}
-  	\caption{This figure shows a plot of the distribution of the aperture on the chip (Row aperture position as a function of CCD column number). One can see, that it has a nonlinear component, which has to be fit by a polynomial to extract the spectrum.}
+  	\caption{This figure shows a plot of the distribution of the aperture on the chip (Row aperture position as a function of CCD column number). One can see, that it has a nonlinear component, which has to be fitted with a polynomial to extract the spectrum.}
   	\label{fig:5}
 \end{figure}
-However, only the brightest most central part of the image is the objects signal, everything else is sky background, stray light and the sort. Using the command \glqq apall\grqq ~in IRAF we can allocate the correct aperture, that is, the correct rows of the CCD image, and correct for the background.  Figures~\ref{fig:4} and~\ref{fig:5} show parts of this procedure. In the former one, one can see the process of finding the aperture as a function of row number and the background level (ca. a factor of three apart). In the peak of the intensity curve, one can see the manually defined aperture, that tells the program in which rows the spectrum is to be found. In the second figure~\ref{fig:5} one can see the process of fitting the spectrum (\glqq Lines\grqq-Axis) as a function of the column pixel value. This has to be done as the bright line in figure~\ref{fig:3} is not absolutely horizontal, but skewed up and down. Correcting with a Legendre polynomial of order 3 or 4 suffices and produces a spectrum as the one in figure~\ref{fig:6}. 
+However, only the brightest most central part of the image is the object's signal, everything else is sky background, stray light and the sort. Using the command \ldq apall\rdq ~in IRAF we can allocate the correct aperture, that is, the correct rows of the CCD image, and correct for the background.  Figures~\ref{fig:4} and~\ref{fig:5} show parts of this procedure. In the former one, one can see the process of finding the aperture as a function of row number and the background level (ca. a factor of three apart). In the peak of the intensity curve, one can see the manually defined aperture, that tells the program in which rows the spectrum is to be found. In the second figure~\ref{fig:5} one can see the process of fitting the spectrum (\ldq Lines\rdq-Axis) as a function of the column pixel value. This has to be done as the bright line in figure~\ref{fig:3} is not absolutely horizontal, but skewed up and down. Correcting with a Legendre polynomial of order 3 or 4 suffices and produces a spectrum as the one in figure~\ref{fig:6}. 
 \begin{figure}[H]
   	\centering
 	\includegraphics[width=1.00\textwidth]{spectroscopy/unnorm_uncalib_vega.png}
-  	\caption{Here you can see the non flux-calibrated spectrum of Vega as mapped on the pixel values of the chip. An image like this is the result of using the \glqq apall\grqq command as documented in~\ref{ss:2}.}
+  	\caption{Here you can see the non flux-calibrated spectrum of Vega as mapped on the pixel values of the chip. An image like this is the result of using the \ldq apall\rdq command as documented in~\ref{ss:2}.}
   	\label{fig:6}
 \end{figure}
 As can be seen clearly, the spectrum still has the imprint of the response of the CCD chip in it and is a function not of wavelength but of the column pixel value. We explain how to calibrate and normalize it in the following section~\ref{ss:3}.
 
-\subsection{Wavelength Calibration \& Continuum Normalization}
+\subsection{Wavelength calibration \& continuum normalization}
 \label{ss:3}
-As before, we again use \glqq apall\grqq ~with slightly modified parameters to extract a spectrum of the calibration lamp image~\ref{fig:2}. Proceeding with the IRAF command \glqq identify\grqq~, it opens up an image similar to figure \ref{fig:7}, which shows the individual lines of the neon lamp to map the pixel values to a preferred wavelength solution. It is now on the user to mark the lines and assign them their correct wavelength {-}a task which is greatly simplified using the resources of line lists for common calibration lamps:~\parencite{Line_Identity_1} \& \parencite{Line_Identity_2}.
+As before, we again use \ldq apall\rdq ~with slightly modified parameters to extract a spectrum of the calibration lamp image~\ref{fig:2}. Proceeding with the IRAF command \ldq identify\rdq, it opens up an image similar to figure \ref{fig:7}, which shows the individual lines of the neon lamp to map the pixel values to a preferred wavelength solution. It is now on the user to mark the lines and assign them their correct wavelength - a task which is greatly simplified using the resources of line lists for common calibration lamps:~\parencite{Line_Identity_1} \& \parencite{Line_Identity_2}.
 \begin{figure}[H]
   	\centering
     \includegraphics[width=1.00\textwidth]{spectroscopy/calibration_done.jpg}
@@ -628,18 +625,18 @@ As before, we again use \glqq apall\grqq ~with slightly modified parameters to e
   	\caption{This graph shows the residua (in Angstroms) of the fit to the calibration spectrum as a function of wavelength.}
   	\label{fig:8}
 \end{figure}
-~\\\\Finding and identifying all the lines allows us to again fit a polynomial like a Legendre or a Chebychev to the CCD pixel-wavelength function. The result is an image like figure~\ref{fig:8}, showing the residuals of the fitting process with a RMS-scatter of about $\SI{0.3}{\angstrom}$. The solution can now be applied to the uncalibrated spectrum (figure~\ref{fig:6}) using the \glqq dispcor\grqq ~command. Viewing it now with \glqq splot\grqq ~will show the spectrum as a function of wavelength.\\\\ For quantitative analysis of spectra, it is sometimes convenient to normalize the spectrum with the continuum. This can be done using the command \glqq continuum\grqq ~in order to fit a high order polynomial to the spectrum (see figure \ref{fig:9}). Keyword parameters can be used to tell the program at what sigma level it is supposed to sort out non-continuum points {-}i.e. the lines. IRAF will then iteratively fit the spectrum to normalize to the now defined continuum level. The output spectrum of the wavelength calibrated and continuum normalized spectrum can be seen in figure \ref{fig:10}.
+~\\\\Finding and identifying all the lines allows us to again fit a polynomial like a Legendre or a Chebychev to the CCD pixel-wavelength function. The result is an image like figure~\ref{fig:8}, showing the residuals of the fitting process with a RMS-scatter of about $\SI{0.3}{\angstrom}$. The solution can now be applied to the uncalibrated spectrum (figure~\ref{fig:6}) using the \ldq dispcor\rdq ~command. Viewing it now with \ldq splot\rdq ~will show the spectrum as a function of wavelength.\\\\ For quantitative analysis of spectra, it is sometimes convenient to normalize the spectrum with the continuum. This can be done using the command \ldq continuum\rdq ~in order to fit a high order polynomial to the spectrum (see figure \ref{fig:9}). Keyword parameters can be used to tell the program at what sigma level it is supposed to sort out non-continuum points - i.e. the lines. IRAF will then iteratively fit the spectrum to normalize to the now defined continuum level. The output spectrum of the wavelength calibrated and continuum normalized spectrum can be seen in figure \ref{fig:10}.
 \begin{figure}[H]
 	\centering
     \includegraphics[width=1.00\textwidth]{spectroscopy/continuum_normalization_fitting.jpg}
-  	\caption{In this figure one can see the unnormalized, wavelength calibrated spectrum of Vega. The continuum must be fit by a high order spline to normalize the spectrum.}
+  	\caption{In this figure one can see the unnormalized, wavelength calibrated spectrum of Vega. The continuum must be fitted with a high order spline to normalize the spectrum.}
   	\label{fig:9}
 \end{figure}
 
 \subsection{Discussion}
 \label{ss:4}
-Even though the extracted and processed spectrum of Vega, which can be seen in figure~\ref{fig:10}, certainly looks nice enough it is by no means perfect. The very first point of critique is that the fit of the polynomial in the process of wavelength calibration and normalization seems to leave ugly divergent tails on the left{-}and rightmost edge of the spectrum. Moreover, due to the way the optical image is mapped onto the CCD, the edges are skewed upwards, to higher intensities {-}as can be seen particularly well in the range below H$\gamma$.  Consequently, one cannot trust continuum levels in parts below H$\beta$ or above the waterbands in the red, leaving us with a useable wavelength range of ca. $\SI{4700}{\angstrom} < \lambda < \SI{7800}{\angstrom}$.\\\\Another weak point in the procedure is the huge wavelength shift introduced by the calibration lamp. The light of the neon lamp is not, as ought to be, collimated with the same focal ratio of the telescope ($\frac{F}{D}=8$) and guided towards the slit with a mirror. Rather, the lamp just shines through the slit with an unknown focal ratio, introducing wavelength dependent blues hifts into the spectrum. The effect was measured to be about $\Delta\lambda_{H\alpha} = \SI{3.3}{\angstrom}$ ~in the vicinity of H$\alpha$ and to staggering $\Delta\lambda_{H\beta} = \SI{12.9}{\angstrom}$ ~at H$\beta$. This obviously hinders any type of research on radial velocity shifts and greatly complicates the process of identifying small metal lines.\\\\
-Since we observed two objects, we can compare this rather obvious A0 V Vega archetype spectrum to our Deneb spectrum (see figure~\ref{fig:11}). We immediately see vast differences in the morphology and strength of the lines {-}the supergiant nature of Deneb enhances the strong metal lines and its stellar wind greatly diminishes the Balmer lines~\parencite{Line_Variability} as can be seen in figure~\ref{fig:12}. Nevertheless, one can still recognize problems for wavelength values outside the aforementioned interval of $\SI{4700}{\angstrom} < \lambda < \SI{7800}{\angstrom}$.
+Even though the extracted and processed spectrum of Vega, which can be seen in figure~\ref{fig:10}, certainly looks nice enough it is by no means perfect. The very first point of critique is that the fit of the polynomial in the process of wavelength calibration and normalization seems to leave ugly divergent tails on the left- and rightmost edge of the spectrum. Moreover, due to the way the optical image is mapped onto the CCD, the edges are skewed upwards, to higher intensities - as can be seen particularly well in the range below H$\gamma$.  Consequently, one cannot trust continuum levels in parts below H$\beta$ or above the waterbands in the red, leaving us with a useable wavelength range of ca. $\SI{4700}{\angstrom} < \lambda < \SI{7800}{\angstrom}$.\\\\Another weak point in the procedure is the huge wavelength shift introduced by the calibration lamp. The light of the neon lamp is not, as ought to be, collimated with the same focal ratio of the telescope ($\frac{F}{D}=8$) and guided towards the slit with a mirror. Rather, the lamp just shines through the slit with an unknown focal ratio, introducing wavelength dependent blue shifts into the spectrum. The effect was measured to be about $\Delta\lambda_{H\alpha} = \SI{3.3}{\angstrom}$ ~in the vicinity of H$\alpha$ and to staggering $\Delta\lambda_{H\beta} = \SI{12.9}{\angstrom}$ ~at H$\beta$. This obviously hinders any type of research on radial velocity shifts and greatly complicates the process of identifying small metal lines.\\\\
+Since we observed two objects, we can compare this rather obvious A0 V Vega archetype spectrum to our Deneb spectrum (see figure~\ref{fig:11}). We immediately see vast differences in the morphology and strength of the lines - the supergiant nature of Deneb enhances the strong metal lines and its stellar wind greatly diminishes the Balmer lines~\parencite{Line_Variability} as can be seen in figure~\ref{fig:12}. Nevertheless, one can still recognize problems for wavelength values outside the aforementioned interval of $\SI{4700}{\angstrom} < \lambda < \SI{7800}{\angstrom}$.
 
 \begin{figure}[H]
   	\centering
@@ -658,14 +655,14 @@ Since we observed two objects, we can compare this rather obvious A0 V Vega arch
 \begin{figure}[H]
 	\centering
     \includegraphics[width=1.00\textwidth]{spectroscopy/silicon_lines_deneb.png}
-  	\caption{In this figure you can see H$\alpha$ in direct comparison to two of the stronger Silicon II lines for the star Deneb {-}$\alpha$ Cygni.}
+  	\caption{In this figure you can see H$\alpha$ in direct comparison to two of the stronger Silicon II lines for the star Deneb - $\alpha$ Cygni.}
   	\label{fig:12}
 \end{figure}
 
 %\section{Discussion}
 % discussion is mostly already done in individual sections
 
-\newpage
+\pagebreak
 \section{Acknowledgements}
 
 This research has made use of the programming language Python\footnote{\url{https://www.python.org}}.\\ % extra fürn Stefan ^^
@@ -676,7 +673,7 @@ This research made use of matplotlib, a Python library for publication quality g
 This research made use of ccdproc \parencite{2015ascl.soft10007C}.\\
 This research made use of data provided by Astrometry.net. \parencite{Astrometry}\\
 This research made use of SExtractor \parencite{SExtractor}. \\
-This research has made use of "Aladin sky atlas" developed at CDS, Strasbourg Observatory, France.\\ 
+This research has made use of \ldq Aladin sky atlas\rdq developed at CDS, Strasbourg Observatory, France.\\ 
 This research has made use of the VizieR catalogue access tool, CDS, Strasbourg, France.\\
 This research has made use of the SIMBAD database, operated at CDS, Strasbourg, France.\\
 This work has made use of data from the European Space Agency (ESA) mission
@@ -691,11 +688,11 @@ This research made use of ds9, a tool for data visualization supported by the Ch
 IRAF is distributed by the National Optical Astronomy Observatory, which is operated by the Association of Universities for Research in Astronomy (AURA) under cooperative agreement with the National Science Foundation \parencite{1993ASPC...52..173T}. \\
 The authors are grateful to Thomas Steindl, BSc. for providing the cooperative writing environment in Overleaf. % :P
 
-\newpage
+\pagebreak
 \section{References}
 \printbibliography[heading=none] % biblatex/biber bibliography
 
-\newpage
+\pagebreak
 
 \appendix
 
@@ -703,7 +700,7 @@ The authors are grateful to Thomas Steindl, BSc. for providing the cooperative w
 
 \section{\textit{Gaia} data on the extracted sources of the three clusters}\label{sec:appendix}
 
-This appendix contains the various properties determined by \textit{Gaia} for every star we had a look at during the cluster analysis. Those properties are the Gaia Source ID, the position of the star in right ascension (RA) and declination (Dec), the proper motions in those directions, the parallax, the radial velocity (RV) and finally the Gaia magnitude (mag$_\text{g}$). Notice that the designation cluster member (CM) only means that those stars were still standing after the iterative sigma clipping procedure explained in point 8 of section \ref{sec:Gaia}. 
+This appendix contains the various properties determined by \textit{Gaia} for every star we had a look at during the cluster analysis. Those properties are the \textit{Gaia}Source ID, the position of the star in right ascension (RA) and declination (Dec), the proper motions in those directions, the parallax, the radial velocity (RV) and finally the \textit{Gaia}magnitude (mag$_\text{g}$). Notice that the designation cluster member (CM) only means that those stars were still standing after the iterative sigma clipping procedure explained in point 8 of section \ref{sec:Gaia}. 
 
 \subsection{M34}
 
@@ -711,12 +708,12 @@ This appendix contains the various properties determined by \textit{Gaia} for ev
  \begin{longtable}[c]{S[table-format=18.0]S[table-format=2.15]S[table-format=2.15]S[table-format=-2.17]S[table-format=-2.16]S[table-format=-2.16]S[table-format=-3.16]S[table-format=2.7]}
  \caption{\textit{Gaia Source IDs} and various other properties of our identified cluster members (CMs) of M34.\label{long:1}}\\
  \hline
- {Gaia Source ID} & {RA in $\si{\degree}$} & {Dec in $\si{\degree}$} & {pm RA in $\si{\mas \per \year}$} & {pm Dec in $\si{\mas \per \year}$} & {parallax in $\si{\mas}$}  & {RV in  $\si{\km \per \second}$} & {mag$_\text{g}$}\\
+ {\textit{Gaia}Source ID} & {RA in $\si{\degree}$} & {Dec in $\si{\degree}$} & {pm RA in $\si{\mas \per \year}$} & {pm Dec in $\si{\mas \per \year}$} & {parallax in $\si{\mas}$}  & {RV in  $\si{\km \per \second}$} & {mag$_\text{g}$}\\
  \hline
  \endfirsthead
  \multicolumn{8}{r}{... Continuation of table \ref{long:1}}\\
  \hline
-{Gaia Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
+{\textit{Gaia}Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
  \hline
  \endhead
  \hline \multicolumn{8}{r}{{Continued on the next page...}} \\
@@ -793,12 +790,12 @@ This appendix contains the various properties determined by \textit{Gaia} for ev
  \begin{longtable}[c]{S[table-format=18.0]S[table-format=2.15]S[table-format=2.15]S[table-format=-2.17]S[table-format=-2.16]S[table-format=-2.16]S[table-format=-3.16]S[table-format=2.7]}
  \caption{\textit{Gaia Source IDs} and various other properties of the non CMs of M34.\label{long:2}}\\
  \hline
-{Gaia Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
+{\textit{Gaia}Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
  \hline
  \endfirsthead
  \multicolumn{8}{r}{... Continuation of table \ref{long:2}}\\
  \hline
-{Gaia Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
+{\textit{Gaia}Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
  \hline
  \endhead
  \hline \multicolumn{8}{r}{{Continued on the next page...}} \\
@@ -935,12 +932,12 @@ This appendix contains the various properties determined by \textit{Gaia} for ev
  \begin{longtable}[c]{S[table-format=18.0]S[table-format=2.15]S[table-format=2.15]S[table-format=-2.17]S[table-format=-2.16]S[table-format=-2.16]S[table-format=-3.16]S[table-format=2.7]}
  \caption{\textit{Gaia Source IDs} and various other properties of the stars in M34, which were not analysed.\label{long:3}}\\
  \hline
-{Gaia Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
+{\textit{Gaia}Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
  \hline
  \endfirsthead
  \multicolumn{8}{r}{... Continuation of table \ref{long:3}}\\
  \hline
-{Gaia Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
+{\textit{Gaia}Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
  \hline
  \endhead
  \hline \multicolumn{8}{r}{{Continued on the next page...}} \\
@@ -960,19 +957,19 @@ This appendix contains the various properties determined by \textit{Gaia} for ev
 337165794710535040 & 40.46577462822909  & 42.7722352917234   & -0.5096627478972153 & -9.037531477765214  & -0.4785593859943979  & {-}                 & 14.180278 
  \end{longtable}
 
-\newpage
+\pagebreak
 
 \subsection{Teutsch 55}
 \scriptsize
  \begin{longtable}[c]{S[table-format=18.0]S[table-format=2.15]S[table-format=2.15]S[table-format=-2.17]S[table-format=-2.16]S[table-format=-2.16]S[table-format=-3.16]S[table-format=2.7]}
  \caption{\textit{Gaia Source IDs} and various other properties of our identified cluster members (CMs) of Teutsch 55.\label{long:4}}\\
  \hline
-{Gaia Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
+{\textit{Gaia}Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
  \hline
  \endfirsthead
  \multicolumn{8}{r}{... Continuation of table \ref{long:4}}\\
  \hline
-{Gaia Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
+{\textit{Gaia}Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
  \hline
  \endhead
  \hline \multicolumn{8}{r}{{Continued on the next page...}} \\
@@ -1130,12 +1127,12 @@ This appendix contains the various properties determined by \textit{Gaia} for ev
  \begin{longtable}[c]{S[table-format=18.0]S[table-format=2.15]S[table-format=2.15]S[table-format=-2.17]S[table-format=-2.16]S[table-format=-2.16]S[table-format=-3.16]S[table-format=2.7]}
  \caption{\textit{Gaia Source IDs} and various other properties of the non CMs of Teutsch 55.\label{long:5}}\\
  \hline
-{Gaia Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
+{\textit{Gaia}Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
  \hline
  \endfirsthead
  \multicolumn{8}{r}{... Continuation of table \ref{long:5}}\\
  \hline
-{Gaia Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
+{\textit{Gaia}Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
  \hline
  \endhead
  \hline \multicolumn{8}{r}{{Continued on the next page...}} \\
@@ -1190,12 +1187,12 @@ This appendix contains the various properties determined by \textit{Gaia} for ev
  \begin{longtable}[c]{S[table-format=18.0]S[table-format=2.15]S[table-format=2.15]S[table-format=-2.17]S[table-format=-2.16]S[table-format=-2.16]S[table-format=-3.16]S[table-format=2.7]}
  \caption{\textit{Gaia Source IDs} and various other properties of the stars in Teutsch 55, which were not analysed.\label{long:6}}\\
  \hline
-{Gaia Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
+{\textit{Gaia}Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
  \hline
  \endfirsthead
  \multicolumn{8}{r}{... Continuation of table \ref{long:6}}\\
  \hline
-{Gaia Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
+{\textit{Gaia}Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
  \hline
  \endhead
  \hline \multicolumn{8}{r}{{Continued on the next page...}} \\
@@ -1212,19 +1209,19 @@ This appendix contains the various properties determined by \textit{Gaia} for ev
 513614767903945984 & 37.28478215568685  & 62.106908014574266 & -1.02427308501209   & -0.12016081908048697 & 0.4468440447391502 & {-}                 & 10.810971 
  \end{longtable}
 
-\newpage
+\pagebreak
 
 \subsection{Stock 19}
 \scriptsize
  \begin{longtable}[c]{S[table-format=18.0]S[table-format=2.15]S[table-format=2.15]S[table-format=-2.17]S[table-format=-2.16]S[table-format=-2.16]S[table-format=-3.16]S[table-format=2.7]}
  \caption{\textit{Gaia Source IDs} and various other properties of our identified cluster members (CMs) of Stock 19.\label{long:7}}\\
  \hline
-{Gaia Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
+{\textit{Gaia}Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
  \hline
  \endfirsthead
  \multicolumn{8}{r}{... Continuation of table \ref{long:7}}\\
  \hline
-{Gaia Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
+{\textit{Gaia}Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
  \hline
  \endhead
  \hline \multicolumn{8}{r}{{Continued on the next page...}} \\
@@ -1400,12 +1397,12 @@ This appendix contains the various properties determined by \textit{Gaia} for ev
  \begin{longtable}[c]{S[table-format=18.0]S[table-format=2.15]S[table-format=2.15]S[table-format=-2.17]S[table-format=-2.16]S[table-format=-2.16]S[table-format=-3.16]S[table-format=2.7]}
  \caption{\textit{Gaia Source ID} and various other properties of the non CMs of Stock 19.\label{long:8}}\\
  \hline
-{Gaia Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
+{\textit{Gaia}Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
  \hline
  \endfirsthead
  \multicolumn{8}{r}{... Continuation of table \ref{long:8}}\\
  \hline
-{Gaia Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
+{\textit{Gaia}Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
  \hline
  \endhead
  \hline \multicolumn{8}{r}{{Continued on the next page...}} \\
@@ -1458,12 +1455,12 @@ This appendix contains the various properties determined by \textit{Gaia} for ev
  \begin{longtable}[c]{S[table-format=18.0]S[table-format=2.15]S[table-format=2.15]S[table-format=-2.17]S[table-format=-2.16]S[table-format=-2.16]S[table-format=-3.16]S[table-format=2.7]}
  \caption{\textit{Gaia Source ID} and various other properties of the stars in Stock 19, which were not analysed.\label{long:9}}\\
  \hline
-{Gaia Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
+{\textit{Gaia}Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
  \hline
  \endfirsthead
  \multicolumn{8}{r}{... Continuation of table \ref{long:9}}\\
  \hline
-{Gaia Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
+{\textit{Gaia}Source ID}     & {RA in $\si{\degree}$}             & {Dec in $\si{\degree}$}            & {pm RA in $\si{\mas \per \year}$}        & {pm Dec in $\si{\mas \per \year}$}     & {parallax in $\si{\mas}$}     & {RV in  $\si{\km \per \second}$}           & {mag$_\text{g}$}\\
  \hline
  \endhead
  \hline \multicolumn{8}{r}{{Continued on the next page...}} \\

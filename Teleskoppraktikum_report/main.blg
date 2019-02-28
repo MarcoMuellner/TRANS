@@ -1,15 +1,15 @@
 [0] Config.pm:302> INFO - This is Biber 2.9
 [0] Config.pm:305> INFO - Logfile is 'main.blg'
-[23] biber:313> INFO - === Mi Feb 27, 2019, 23:28:12
-[42] Biber.pm:371> INFO - Reading 'main.bcf'
-[102] Biber.pm:857> INFO - Found 23 citekeys in bib section 0
-[114] Biber.pm:3981> INFO - Processing section 0
-[124] Biber.pm:4154> INFO - Looking for bibtex format file 'lit.bib' for section 0
-[128] bibtex.pm:1468> INFO - LaTeX decoding ...
-[166] bibtex.pm:1294> INFO - Found BibTeX data source 'lit.bib'
-[2091] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[2091] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[2091] Biber.pm:3809> INFO - Sorting list 'anyt/global//global/global' of type 'entry' with template 'anyt' and locale 'en-US'
-[2091] Biber.pm:3815> INFO - No sort tailoring available for locale 'en-US'
-[2160] bbl.pm:617> INFO - Writing 'main.bbl' with encoding 'UTF-8'
-[2830] bbl.pm:720> INFO - Output to main.bbl
+[15] biber:313> INFO - === Do Feb 28, 2019, 16:30:26
+[27] Biber.pm:371> INFO - Reading 'main.bcf'
+[64] Biber.pm:857> INFO - Found 23 citekeys in bib section 0
+[72] Biber.pm:3981> INFO - Processing section 0
+[78] Biber.pm:4154> INFO - Looking for bibtex format file 'lit.bib' for section 0
+[81] bibtex.pm:1468> INFO - LaTeX decoding ...
+[105] bibtex.pm:1294> INFO - Found BibTeX data source 'lit.bib'
+[1372] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[1372] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[1372] Biber.pm:3809> INFO - Sorting list 'anyt/global//global/global' of type 'entry' with template 'anyt' and locale 'en-US'
+[1372] Biber.pm:3815> INFO - No sort tailoring available for locale 'en-US'
+[1418] bbl.pm:617> INFO - Writing 'main.bbl' with encoding 'UTF-8'
+[1864] bbl.pm:720> INFO - Output to main.bbl
